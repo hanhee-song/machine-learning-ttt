@@ -8,6 +8,10 @@ class RandomPlayer extends Player {
   constructor(props) {
     super(props);
   }
+  
+  makeMove() {
+    
+  }
 }
 
 class AIPlayer extends Player {
