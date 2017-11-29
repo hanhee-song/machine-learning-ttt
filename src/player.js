@@ -9,8 +9,8 @@ class RandomPlayer extends Player {
     super(props);
   }
   
-  makeMove() {
-    
+  makeMove(board) {
+    // Returns a promise
   }
 }
 
