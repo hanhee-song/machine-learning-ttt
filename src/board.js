@@ -1,10 +1,11 @@
 class Board {
   constructor(size) {
     this.size = size;
-    this.grid = this.initializeGrid(size);
+    this.grid = undefined;
+    this.resetGrid(size);
   }
   
-  initializeGrid(size) {
+  resetGrid(size) {
     const grid = [];
     for (var i = 0; i < this.size; i++) {
       const row = [];
@@ -13,7 +14,7 @@ class Board {
       }
       grid.push(row);
     }
-    return grid;
+    this.grid = grid;
   }
   
   drawInitialBoard() {
@@ -78,18 +79,18 @@ class Board {
   }
   
   placePiece(pos, piece) {
-    if (this.checkValidPos(pos) && this._checkValidPiece(piece)) {
+    if (this.validPos(pos) && this._validPiece(piece)) {
       this.grid[pos[0]][pos[1]] = piece;
     }
     const square = document.querySelector(`.s${pos[0]}${pos[1]}`);
     square.innerHTML = piece;
   }
   
-  _checkValidPiece(piece) {
+  _validPiece(piece) {
     return piece === "x" || piece === "o";
   }
   
-  checkValidPos(pos) {
+  validPos(pos) {
     return this.openPositions().map((arr) => {
       return JSON.stringify(arr);
     }).includes(JSON.stringify(pos));

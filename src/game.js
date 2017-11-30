@@ -10,6 +10,9 @@ class Game {
     this.player1 = null;
     this.player2 = null;
     this.currentPlayer = this.player1;
+    this.score1 = 0;
+    this.score2 = 0;
+    this.ties = 0;
   }
   
   newGame(size = 3, player1 = new RandomPlayer(), player2 = new RandomPlayer()) {
@@ -29,13 +32,14 @@ class Game {
   
   _takeTurn() {
     if (this.board.isFull() || this.board.isGameOver()) {
-      console.log(this.board.winner());
-      return;
+      this.updateScore();
+      this.board.resetGrid();
+      debugger;
     }
     this.currentPlayer.makeMove(this.board)
       .then(
         pos => {
-          if (this.board.checkValidPos(pos)) {
+          if (this.board.validPos(pos)) {
             this.board.placePiece(pos, this.currentPlayer.piece);
             this._switchPlayers();
             this._takeTurn();
@@ -46,6 +50,25 @@ class Game {
           }
         }
       );
+  }
+  
+  updateScore() {
+    if (this.board.isFull() || this.board.isGameOver()) {
+      switch (this.board.winner()) {
+        case "x":
+          this.score1++;
+          document.querySelector(".score-1-number").innerHTML = this.score1;
+          break;
+        case "o":
+          this.score2++;
+          document.querySelector(".score-2-number").innerHTML = this.score1;
+          break;
+        case "t":
+          this.ties++;
+          document.querySelector(".score-tie-number").innerHTML = this.score1;
+          break;
+      }
+    }
   }
   
   _switchPlayers() {

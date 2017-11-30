@@ -70,14 +70,17 @@ body {
   /*color: #d8d8d8;*/
 }
 
-
+.main-container {
+  width: 502px;
+  margin: auto;
+  margin-top: 100px;
+  display: flex;
+}
 
 #board {
   border: 1px solid red;
   width: 302px;
   height: 302px;
-  margin: auto;
-  margin-top: 100px;
   display: flex;
   flex-wrap: wrap;
 }
@@ -86,4 +89,14 @@ body {
   border: 1px solid blue;
   height: 100px;
   width: 100px;
+}
+
+.scores-container {
+  border: 1px solid red;
+  width: 200px;
+}
+
+.score {
+  border: 1px solid blue;
+  height: 100px;
 }
