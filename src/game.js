@@ -16,24 +16,29 @@ class Game {
     this.size = size;
     this.board = new Board(size);
     this.board.drawInitialBoard();
-    
-    // hardcoding random player
     this.player1 = player1;
     this.player2 = player2;
     this.currentPlayer = this.player1;
   }
   
+  startGame() {
+    this._takeTurn();
+  }
+  
   _takeTurn() {
     this.currentPlayer.makeMove(this.board)
       .then(
-        success => {
-          this._takeTurn();
+        pos => {
+          if (this.board.checkValidPos(pos)) {
+            this._switchPlayers();
+            this._takeTurn();
+          } else {
+            debugger;
+            // You hit this debugger because your AI made some
+            // poor decisions that it should rethink.
+          }
         }
       );
-  }
-  
-  _promptMove(player) {
-    
   }
   
   _switchPlayers() {

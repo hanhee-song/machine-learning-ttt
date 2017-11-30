@@ -3,7 +3,6 @@ class Board {
   constructor(size) {
     this.size = size;
     this.grid = this.initializeGrid(size);
-    this._checkValidPos = this._checkValidPos.bind(this);
   }
   
   initializeGrid(size) {
@@ -77,7 +76,7 @@ class Board {
   
   placePiece(pos, piece) {
     this._checkValidPiece(piece);
-    this._checkValidPos(pos);
+    this.checkValidPos(pos);
     
     this.grid[pos[1]][pos[0]] = piece;
   }
@@ -88,11 +87,17 @@ class Board {
     }
   }
   
-  _checkValidPos(pos) {
-    if (pos[0] < 0 || pos[0] >= this.size
+  checkValidPos(pos) {
+    if ( this.openPositions().has(pos)
+      || pos[0] < 0 || pos[0] >= this.size
       || pos[1] < 0 || pos[1] >= this.size) {
         throw "Invalid position";
     }
+  }
+  
+  openPositions() {
+    // returns set of available positions
+    
   }
 }
 
@@ -117,24 +122,29 @@ class Game {
     this.size = size;
     this.board = new Board(size);
     this.board.drawInitialBoard();
-    
-    // hardcoding random player
     this.player1 = player1;
     this.player2 = player2;
     this.currentPlayer = this.player1;
   }
   
+  startGame() {
+    this._takeTurn();
+  }
+  
   _takeTurn() {
     this.currentPlayer.makeMove(this.board)
       .then(
-        success => {
-          this._takeTurn();
+        pos => {
+          if (this.board.checkValidPos(pos)) {
+            this._switchPlayers();
+            this._takeTurn();
+          } else {
+            debugger;
+            // You hit this debugger because your AI made some
+            // poor decisions that it should rethink.
+          }
         }
       );
-  }
-  
-  _promptMove(player) {
-    
   }
   
   _switchPlayers() {
@@ -156,6 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const game = new Game();
   
   game.newGame();
+  game.startGame();
   
 });
 
@@ -172,7 +183,15 @@ class RandomPlayer extends Player {
   }
   
   makeMove(board) {
-    // Returns a promise
+    // add logic for making move depending on
+    // board.openPositions()
+    
+    let move = [0, 0];
+    return new Promise(function (resolve, reject) {
+      setTimeout(() => {
+        return resolve(move);
+      }, 500);
+    });
   }
 }
 

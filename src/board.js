@@ -2,7 +2,6 @@ class Board {
   constructor(size) {
     this.size = size;
     this.grid = this.initializeGrid(size);
-    this._checkValidPos = this._checkValidPos.bind(this);
   }
   
   initializeGrid(size) {
@@ -76,7 +75,7 @@ class Board {
   
   placePiece(pos, piece) {
     this._checkValidPiece(piece);
-    this._checkValidPos(pos);
+    this.checkValidPos(pos);
     
     this.grid[pos[1]][pos[0]] = piece;
   }
@@ -87,11 +86,17 @@ class Board {
     }
   }
   
-  _checkValidPos(pos) {
-    if (pos[0] < 0 || pos[0] >= this.size
+  checkValidPos(pos) {
+    if ( this.openPositions().has(pos)
+      || pos[0] < 0 || pos[0] >= this.size
       || pos[1] < 0 || pos[1] >= this.size) {
         throw "Invalid position";
     }
+  }
+  
+  openPositions() {
+    // returns set of available positions
+    
   }
 }
 

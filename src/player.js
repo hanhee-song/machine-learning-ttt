@@ -10,7 +10,15 @@ class RandomPlayer extends Player {
   }
   
   makeMove(board) {
-    // Returns a promise
+    // add logic for making move depending on
+    // board.openPositions()
+    
+    let move = [0, 0];
+    return new Promise(function (resolve, reject) {
+      setTimeout(() => {
+        return resolve(move);
+      }, 500);
+    });
   }
 }
 
