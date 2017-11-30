@@ -15,7 +15,7 @@ class Game {
     this.ties = 0;
   }
   
-  newGame(size = 3, player1 = new RandomPlayer(), player2 = new RandomPlayer()) {
+  newGame(size = 3, player1 = new AIPlayer(), player2 = new RandomPlayer()) {
     this.size = size;
     this.board = new Board(size);
     this.board.drawInitialBoard();

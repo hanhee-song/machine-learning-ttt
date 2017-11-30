@@ -133,7 +133,7 @@ class Game {
     this.ties = 0;
   }
   
-  newGame(size = 3, player1 = new RandomPlayer(), player2 = new RandomPlayer()) {
+  newGame(size = 3, player1 = new AIPlayer(), player2 = new RandomPlayer()) {
     this.size = size;
     this.board = new Board(size);
     this.board.drawInitialBoard();
@@ -217,18 +217,19 @@ class Player {
   constructor(props) {
     this.piece = null;
   }
-}
-
-class RandomPlayer extends Player {
-  constructor(props) {
-    super(props);
+  
+  _makeRandomMove(board) {
+    const move = this._findRandomMove(board);
+    return this._returnMove(move);
   }
   
-  makeMove(board) {
-    // add logic for making move depending on
+  _findRandomMove(board) {
     const positions = board.openPositions();
     const randPos = Math.floor(Math.random() * positions.length);
-    const move = positions[randPos];
+    return positions[randPos];
+  }
+  
+  _returnMove(move) {
     return new Promise(function (resolve, reject) {
       setTimeout(() => {
         return resolve(move);
@@ -237,9 +238,31 @@ class RandomPlayer extends Player {
   }
 }
 
+class RandomPlayer extends Player {
+  constructor(props) {
+    super(props);
+  }
+  
+  makeMove(board) {
+    return this._makeRandomMove(board);
+  }
+}
+
 class AIPlayer extends Player {
   constructor(props) {
     super(props);
+    this.currentGameMemory = [];
+    this.memory = {};
+  }
+  
+  makeMove(board) {
+    // for now, it'll make a random move and remember it
+    const move = this._findRandomMove(board);
+    const boardState = JSON.stringify(board.grid);
+    const moveState = JSON.stringify(move);
+    this.currentGameMemory.push([boardState, moveState]);
+    console.log(this.currentGameMemory);
+    return this._returnMove(move);
   }
 }
 
