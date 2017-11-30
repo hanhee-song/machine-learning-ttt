@@ -20,4 +20,4 @@ class AIPlayer extends Player {
   }
 }
 
-export { RandomPlayer, AIPlayer };
+module.exports = { RandomPlayer, AIPlayer };

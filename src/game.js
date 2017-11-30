@@ -1,7 +1,9 @@
-import { RandomPlayer, AIPlayer } from './player.js';
-import Board from './board.js';
+const Players = require('./player.js');
+const RandomPlayer = Players.RandomPlayer;
+const AIPlayer = Players.AIPlayer;
+const Board = require('./board.js');
 
-class TTT {
+class Game {
   constructor() {
     this.size = null;
     this.board = null;
@@ -10,13 +12,14 @@ class TTT {
     this.currentPlayer = this.player1;
   }
   
-  newGame(size, player1, player2) {
+  newGame(size = 3, player1 = new RandomPlayer(), player2 = new RandomPlayer()) {
     this.size = size;
     this.board = new Board(size);
+    this.board.drawInitialBoard();
     
     // hardcoding random player
-    this.player1 = new RandomPlayer();
-    this.player2 = new RandomPlayer();
+    this.player1 = player1;
+    this.player2 = player2;
     this.currentPlayer = this.player1;
   }
   
@@ -42,3 +45,5 @@ class TTT {
     }
   }
 }
+
+module.exports = Game;

@@ -1,0 +1,11 @@
+#board {
+  border: 1px solid red;
+  width: 700px;
+  height: 700px;
+  margin: auto;
+  margin-top: 100px;
+}
+
+.square {
+  border: 1px solid blue;
+}
