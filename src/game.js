@@ -28,7 +28,8 @@ class Game {
   }
   
   _takeTurn() {
-    if (this.board.isFull()) {
+    if (this.board.isFull() || this.board.isGameOver()) {
+      console.log(this.board.winner());
       return;
     }
     this.currentPlayer.makeMove(this.board)

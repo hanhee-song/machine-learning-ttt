@@ -30,6 +30,11 @@ class Board {
     }
   }
   
+  isGameOver() {
+    const winner = this.winner();
+    return winner && winner !== " ";
+  }
+  
   winner() {
     // rows & col
     for (var i = 0; i < this.size; i++) {
@@ -39,10 +44,10 @@ class Board {
         row.add(this.grid[i][j]);
         col.add(this.grid[j][i]);
       }
-      if (row.length === 1 && !row.has(" ")) {
+      if (row.size === 1 && !row.has(" ")) {
         return row.values().next().value;
       }
-      if (col.length === 1 && !col.has(" ")) {
+      if (col.size === 1 && !col.has(" ")) {
         return row.values().next().value;
       }
     }
@@ -54,13 +59,12 @@ class Board {
       diag1.add(this.grid[i][i]);
       diag2.add(this.grid[i][this.size - i]);
     }
-    if (diag1.length === 1 && !diag1.has(" ")) {
+    if (diag1.size === 1 && !diag1.has(" ")) {
       return diag1.values().next().value;
     }
-    if (diag2.length === 1 && !diag2.has(" ")) {
+    if (diag2.size === 1 && !diag2.has(" ")) {
       return diag2.values().next().value;
     }
-    
     return this.isFull() ? "t" : undefined;
   }
   
