@@ -17,7 +17,9 @@ class Game {
     this.board = new Board(size);
     this.board.drawInitialBoard();
     this.player1 = player1;
+    this.player1.piece = "x";
     this.player2 = player2;
+    this.player2.piece = "o";
     this.currentPlayer = this.player1;
   }
   
@@ -26,10 +28,14 @@ class Game {
   }
   
   _takeTurn() {
+    if (this.board.isFull()) {
+      return;
+    }
     this.currentPlayer.makeMove(this.board)
       .then(
         pos => {
           if (this.board.checkValidPos(pos)) {
+            this.board.placePiece(pos, this.currentPlayer.piece);
             this._switchPlayers();
             this._takeTurn();
           } else {

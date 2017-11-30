@@ -1,6 +1,6 @@
 class Player {
   constructor(props) {
-    
+    this.piece = null;
   }
 }
 
@@ -11,13 +11,13 @@ class RandomPlayer extends Player {
   
   makeMove(board) {
     // add logic for making move depending on
-    // board.openPositions()
-    
-    let move = [0, 0];
+    const positions = board.openPositions();
+    const randPos = Math.floor(Math.random() * positions.length);
+    const move = positions[randPos];
     return new Promise(function (resolve, reject) {
       setTimeout(() => {
         return resolve(move);
-      }, 500);
+      }, 0);
     });
   }
 }

@@ -10,7 +10,7 @@ class Board {
     for (var i = 0; i < this.size; i++) {
       const row = [];
       for (var j = 0; j < this.size; j++) {
-        row.push("");
+        row.push(" ");
       }
       grid.push(row);
     }
@@ -23,7 +23,7 @@ class Board {
     for (var i = 0; i < this.size; i++) {
       for (var j = 0; j < this.size; j++) {
         const square = document.createElement('div');
-        square.className = `square ${i}-${j}`;
+        square.className = `square s${i}${j}`;
         square.style.width = `${Math.floor(length / this.size)}px`;
         square.style.height = `${Math.floor(length / this.size)}px`;
         board.append(square);
@@ -40,10 +40,10 @@ class Board {
         row.add(this.grid[i][j]);
         col.add(this.grid[j][i]);
       }
-      if (row.length === 1 && !row.has("")) {
+      if (row.length === 1 && !row.has(" ")) {
         return row.values().next().value;
       }
-      if (col.length === 1 && !col.has("")) {
+      if (col.length === 1 && !col.has(" ")) {
         return row.values().next().value;
       }
     }
@@ -55,49 +55,56 @@ class Board {
       diag1.add(this.grid[i][i]);
       diag2.add(this.grid[i][this.size - i]);
     }
-    if (diag1.length === 1 && !diag1.has("")) {
+    if (diag1.length === 1 && !diag1.has(" ")) {
       return diag1.values().next().value;
     }
-    if (diag2.length === 1 && !diag2.has("")) {
+    if (diag2.length === 1 && !diag2.has(" ")) {
       return diag2.values().next().value;
     }
     
-    return this.isBoardFull() ? "t" : undefined;
+    return this.isFull() ? "t" : undefined;
   }
   
-  isBoardFull() {
+  isFull() {
     for (var i = 0; i < this.size; i++) {
       for (var j = 0; j < this.size; j++) {
-        if (this.board[i][j] === "") return false;
+        if (this.grid[i][j] === " ") return false;
       }
     }
     return true;
   }
   
   placePiece(pos, piece) {
-    this._checkValidPiece(piece);
-    this.checkValidPos(pos);
-    
-    this.grid[pos[1]][pos[0]] = piece;
+    if (this.checkValidPos(pos) && this._checkValidPiece(piece)) {
+      this.grid[pos[0]][pos[1]] = piece;
+    }
+    const square = document.querySelector(`.s${pos[0]}${pos[1]}`);
+    square.innerHTML = piece;
   }
   
   _checkValidPiece(piece) {
-    if (piece !== "x" || piece !== "o") {
-      throw "Invalid piece";
-    }
+    return piece === "x" || piece === "o";
   }
   
   checkValidPos(pos) {
-    if ( this.openPositions().has(pos)
-      || pos[0] < 0 || pos[0] >= this.size
-      || pos[1] < 0 || pos[1] >= this.size) {
-        throw "Invalid position";
-    }
+    return this.openPositions().map((arr) => {
+      return JSON.stringify(arr);
+    }).includes(JSON.stringify(pos));
+      // && pos[0] >= 0 && pos[0] < this.size
+      // && pos[1] >= 0 && pos[1] < this.size;
   }
   
   openPositions() {
-    // returns set of available positions
-    
+    // returns array of available positions
+    const positions = [];
+    for (var i = 0; i < this.size; i++) {
+      for (var j = 0; j < this.size; j++) {
+        if (this.grid[i][j] === " ") {
+          positions.push([i, j]);
+        }
+      }
+    }
+    return positions;
   }
 }
 
@@ -123,7 +130,9 @@ class Game {
     this.board = new Board(size);
     this.board.drawInitialBoard();
     this.player1 = player1;
+    this.player1.piece = "x";
     this.player2 = player2;
+    this.player2.piece = "o";
     this.currentPlayer = this.player1;
   }
   
@@ -132,10 +141,14 @@ class Game {
   }
   
   _takeTurn() {
+    if (this.board.isFull()) {
+      return;
+    }
     this.currentPlayer.makeMove(this.board)
       .then(
         pos => {
           if (this.board.checkValidPos(pos)) {
+            this.board.placePiece(pos, this.currentPlayer.piece);
             this._switchPlayers();
             this._takeTurn();
           } else {
@@ -173,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
 },{"./game.js":2}],4:[function(require,module,exports){
 class Player {
   constructor(props) {
-    
+    this.piece = null;
   }
 }
 
@@ -184,13 +197,13 @@ class RandomPlayer extends Player {
   
   makeMove(board) {
     // add logic for making move depending on
-    // board.openPositions()
-    
-    let move = [0, 0];
+    const positions = board.openPositions();
+    const randPos = Math.floor(Math.random() * positions.length);
+    const move = positions[randPos];
     return new Promise(function (resolve, reject) {
       setTimeout(() => {
         return resolve(move);
-      }, 500);
+      }, 0);
     });
   }
 }
