@@ -32,8 +32,12 @@ class Game {
   
   _takeTurn() {
     if (this.board.isFull() || this.board.isGameOver()) {
+      // optimize later: winner is run 3 times here
+      const winner = this.board.winner();
       this.updateScore();
       this.board.resetGrid();
+      this.player1.receiveGameEnd(winner);
+      this.player2.receiveGameEnd(winner);
       debugger;
     }
     this.currentPlayer.makeMove(this.board)
@@ -53,21 +57,19 @@ class Game {
   }
   
   updateScore() {
-    if (this.board.isFull() || this.board.isGameOver()) {
-      switch (this.board.winner()) {
-        case "x":
-          this.score1++;
-          document.querySelector(".score-1-number").innerHTML = this.score1;
-          break;
-        case "o":
-          this.score2++;
-          document.querySelector(".score-2-number").innerHTML = this.score1;
-          break;
-        case "t":
-          this.ties++;
-          document.querySelector(".score-tie-number").innerHTML = this.score1;
-          break;
-      }
+    switch (this.board.winner()) {
+      case "x":
+        this.score1++;
+        document.querySelector(".score-1-number").innerHTML = this.score1;
+        break;
+      case "o":
+        this.score2++;
+        document.querySelector(".score-2-number").innerHTML = this.score1;
+        break;
+      case "t":
+        this.ties++;
+        document.querySelector(".score-tie-number").innerHTML = this.score1;
+        break;
     }
   }
   

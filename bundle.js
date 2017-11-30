@@ -150,8 +150,12 @@ class Game {
   
   _takeTurn() {
     if (this.board.isFull() || this.board.isGameOver()) {
+      // optimize later: winner is run 3 times here
+      const winner = this.board.winner();
       this.updateScore();
       this.board.resetGrid();
+      this.player1.receiveGameEnd(winner);
+      this.player2.receiveGameEnd(winner);
       debugger;
     }
     this.currentPlayer.makeMove(this.board)
@@ -171,21 +175,19 @@ class Game {
   }
   
   updateScore() {
-    if (this.board.isFull() || this.board.isGameOver()) {
-      switch (this.board.winner()) {
-        case "x":
-          this.score1++;
-          document.querySelector(".score-1-number").innerHTML = this.score1;
-          break;
-        case "o":
-          this.score2++;
-          document.querySelector(".score-2-number").innerHTML = this.score1;
-          break;
-        case "t":
-          this.ties++;
-          document.querySelector(".score-tie-number").innerHTML = this.score1;
-          break;
-      }
+    switch (this.board.winner()) {
+      case "x":
+        this.score1++;
+        document.querySelector(".score-1-number").innerHTML = this.score1;
+        break;
+      case "o":
+        this.score2++;
+        document.querySelector(".score-2-number").innerHTML = this.score1;
+        break;
+      case "t":
+        this.ties++;
+        document.querySelector(".score-tie-number").innerHTML = this.score1;
+        break;
     }
   }
   
@@ -216,6 +218,14 @@ document.addEventListener("DOMContentLoaded", () => {
 class Player {
   constructor(props) {
     this.piece = null;
+  }
+  
+  makeMove(board) {
+    
+  }
+  
+  receiveGameEnd(winner) {
+    
   }
   
   _makeRandomMove(board) {
@@ -253,6 +263,35 @@ class AIPlayer extends Player {
     super(props);
     this.currentGameMemory = [];
     this.memory = {};
+    this.totalMoveFactor = 0;
+  }
+  
+  receiveGameEnd(winner) {
+    let factor;
+    if (winner === this.piece) {
+      factor = 1;
+    } else if (winner === "t") {
+      factor = 0;
+    } else {
+      factor = -1;
+    }
+    
+    this.currentGameMemory.forEach((arr, i) => {
+      factor += factor;
+      const board = arr[0];
+      const move = arr[1];
+      if (this.memory[board]) {
+        if (this.memory[board][move]) {
+          this.memory[board][move] += factor;
+        } else {
+          this.memory[board][move] = 10 + factor;
+        }
+      } else {
+        this.memory[board] = { [move]: 10 + factor };
+      }
+    });
+    this.currentGameMemory = [];
+    console.log(this.memory);
   }
   
   makeMove(board) {
@@ -261,7 +300,6 @@ class AIPlayer extends Player {
     const boardState = JSON.stringify(board.grid);
     const moveState = JSON.stringify(move);
     this.currentGameMemory.push([boardState, moveState]);
-    console.log(this.currentGameMemory);
     return this._returnMove(move);
   }
 }

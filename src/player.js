@@ -3,6 +3,14 @@ class Player {
     this.piece = null;
   }
   
+  makeMove(board) {
+    
+  }
+  
+  receiveGameEnd(winner) {
+    
+  }
+  
   _makeRandomMove(board) {
     const move = this._findRandomMove(board);
     return this._returnMove(move);
@@ -38,6 +46,35 @@ class AIPlayer extends Player {
     super(props);
     this.currentGameMemory = [];
     this.memory = {};
+    this.totalMoveFactor = 0;
+  }
+  
+  receiveGameEnd(winner) {
+    let factor;
+    if (winner === this.piece) {
+      factor = 1;
+    } else if (winner === "t") {
+      factor = 0;
+    } else {
+      factor = -1;
+    }
+    
+    this.currentGameMemory.forEach((arr, i) => {
+      factor += factor;
+      const board = arr[0];
+      const move = arr[1];
+      if (this.memory[board]) {
+        if (this.memory[board][move]) {
+          this.memory[board][move] += factor;
+        } else {
+          this.memory[board][move] = 10 + factor;
+        }
+      } else {
+        this.memory[board] = { [move]: 10 + factor };
+      }
+    });
+    this.currentGameMemory = [];
+    console.log(this.memory);
   }
   
   makeMove(board) {
@@ -46,7 +83,6 @@ class AIPlayer extends Player {
     const boardState = JSON.stringify(board.grid);
     const moveState = JSON.stringify(move);
     this.currentGameMemory.push([boardState, moveState]);
-    console.log(this.currentGameMemory);
     return this._returnMove(move);
   }
 }
