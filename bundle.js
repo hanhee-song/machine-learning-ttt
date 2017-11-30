@@ -3,7 +3,7 @@ class Board {
   constructor(size) {
     this.size = size;
     this.grid = this.initializeGrid(size);
-    this.checkValidPos = this.checkValidPos.bind(this);
+    this._checkValidPos = this._checkValidPos.bind(this);
   }
   
   initializeGrid(size) {
@@ -20,16 +20,16 @@ class Board {
   
   drawInitialBoard() {
     const board = document.getElementById('board');
+    const length = board.style.width - 2;
     for (var i = 0; i < this.size; i++) {
       for (var j = 0; j < this.size; j++) {
         const square = document.createElement('div');
-        square.classList.add(`square ${i}-${j}`);
-        square.style.width = Math.floor(600 / this.size);
-        square.style.height = Math.floor(600 / this.size);
+        square.className = `square ${i}-${j}`;
+        square.style.width = `${Math.floor(length / this.size)}px`;
+        square.style.height = `${Math.floor(length / this.size)}px`;
         board.append(square);
       }
     }
-    
   }
   
   winner() {
@@ -157,13 +157,12 @@ document.addEventListener("DOMContentLoaded", () => {
   
   game.newGame();
   
-  
 });
 
 },{"./game.js":2}],4:[function(require,module,exports){
 class Player {
   constructor(props) {
-    super(props);
+    
   }
 }
 

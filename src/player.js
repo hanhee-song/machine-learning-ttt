@@ -1,6 +1,6 @@
 class Player {
   constructor(props) {
-    super(props);
+    
   }
 }
 

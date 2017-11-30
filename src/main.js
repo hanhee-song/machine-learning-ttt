@@ -5,5 +5,4 @@ document.addEventListener("DOMContentLoaded", () => {
   
   game.newGame();
   
-  
 });
