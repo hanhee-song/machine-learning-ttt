@@ -7,19 +7,62 @@ class Board {
   
   initializeGrid(size) {
     const grid = [];
-    for (var i = 0; i < size.length; i++) {
+    for (var i = 0; i < this.size; i++) {
       const row = [];
-      for (var i = 0; i < size.length; i++) {
-        row.push(" ");
+      for (var j = 0; j < this.size; j++) {
+        row.push("");
       }
       grid.push(row);
     }
     return grid;
   }
   
+  winner() {
+    // rows & col
+    for (var i = 0; i < this.size; i++) {
+      const row = new Set();
+      const col = new Set();
+      for (var j = 0; j < this.size; j++) {
+        row.add(this.grid[i][j]);
+        col.add(this.grid[j][i]);
+      }
+      if (row.length === 1 && !row.has("")) {
+        return row.values().next().value;
+      }
+      if (col.length === 1 && !col.has("")) {
+        return row.values().next().value;
+      }
+    }
+    
+    // diags
+    const diag1 = new Set();
+    const diag2 = new Set();
+    for (var i = 0; i < this.size; i++) {
+      diag1.add(this.grid[i][i]);
+      diag2.add(this.grid[i][this.size - i]);
+    }
+    if (diag1.length === 1 && !diag1.has("")) {
+      return diag1.values().next().value;
+    }
+    if (diag2.length === 1 && !diag2.has("")) {
+      return diag2.values().next().value;
+    }
+    
+    return this.isBoardFull() ? "t" : undefined;
+  }
+  
+  isBoardFull() {
+    for (var i = 0; i < this.size; i++) {
+      for (var j = 0; j < this.size; j++) {
+        if (this.board[i][j] === "") return false;
+      }
+    }
+    return true;
+  }
+  
   placePiece(pos, piece) {
-    this.checkValidPiece(piece);
-    this.checkValidPos(pos);
+    this._checkValidPiece(piece);
+    this._checkValidPos(pos);
     
     this.grid[pos[1]][pos[0]] = piece;
   }
