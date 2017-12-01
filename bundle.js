@@ -122,6 +122,7 @@ module.exports = Board;
 const Players = require('./player.js');
 const RandomPlayer = Players.RandomPlayer;
 const AIPlayer = Players.AIPlayer;
+const NaivePlayer = Players.NaivePlayer;
 const Board = require('./board.js');
 
 class Game {
@@ -138,7 +139,7 @@ class Game {
     this.running = false;
   }
   
-  newGame(size = 3, player1 = new AIPlayer(), player2 = new RandomPlayer()) {
+  newGame(size = 3, player1 = new AIPlayer(), player2 = new NaivePlayer()) {
     this.size = size;
     this.board = new Board(size);
     this.player1 = player1;
@@ -289,6 +290,37 @@ class NaivePlayer extends Player {
   
   makeMove(board) {
     let move;
+    // rows & col
+    for (var i = 0; i < board.size; i++) {
+      const row = [];
+      const col = [];
+      for (var j = 0; j < board.size; j++) {
+        row.push(board.grid[i][j]);
+        col.push(board.grid[j][i]);
+      }
+      if (row.includes(this.piece) && row.includes(" ")) {
+        move = [i, row.indexOf(" ")];
+      }
+      if (col.includes(this.piece) && col.includes(" ")) {
+        move = [col.indexOf(" "), i];
+      }
+    }
+    
+    // diags
+    const diag1 = [];
+    const diag2 = [];
+    for (var i = 0; i < board.size; i++) {
+      diag1.push(board.grid[i][i]);
+      diag2.push(board.grid[i][board.size - i]);
+    }
+    if (diag1.includes(this.piece) && diag1.includes(" ")) {
+      move = [diag1.indexOf(" "), diag1.indexOf(" ")];
+    }
+    if (diag2.includes(this.piece) && diag2.includes(" ")) {
+      move = [diag2.indexOf(" "), board.size - diag2.indexOf(" ")];
+    }
+    move = move || this._findRandomMove(board);
+    return this._returnMove(move);
   }
 }
 
@@ -372,6 +404,6 @@ class AIPlayer extends Player {
   }
 }
 
-module.exports = { RandomPlayer, AIPlayer };
+module.exports = { RandomPlayer, AIPlayer, NaivePlayer };
 
 },{}]},{},[3]);

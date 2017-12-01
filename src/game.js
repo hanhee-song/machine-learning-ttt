@@ -1,6 +1,7 @@
 const Players = require('./player.js');
 const RandomPlayer = Players.RandomPlayer;
 const AIPlayer = Players.AIPlayer;
+const NaivePlayer = Players.NaivePlayer;
 const Board = require('./board.js');
 
 class Game {
@@ -17,7 +18,7 @@ class Game {
     this.running = false;
   }
   
-  newGame(size = 3, player1 = new AIPlayer(), player2 = new RandomPlayer()) {
+  newGame(size = 3, player1 = new AIPlayer(), player2 = new NaivePlayer()) {
     this.size = size;
     this.board = new Board(size);
     this.player1 = player1;
