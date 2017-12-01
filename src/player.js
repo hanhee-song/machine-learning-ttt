@@ -13,7 +13,7 @@ class Player {
   
   _makeRandomMove(board) {
     const move = this._findRandomMove(board);
-    return this._returnMove(move);
+    return this._promisifyMove(move);
   }
   
   _findRandomMove(board) {
@@ -22,7 +22,7 @@ class Player {
     return positions[randPos];
   }
   
-  _returnMove(move) {
+  _promisifyMove(move) {
     return new Promise(function (resolve, reject) {
       setTimeout(() => {
         return resolve(move);
@@ -41,18 +41,11 @@ class RandomPlayer extends Player {
   }
 }
 
-class NaivePlayer extends Player {
+// PRE-BUILD AI PLAYERS ==================================
+
+class AIPlayer extends Player {
   constructor(props) {
     super(props);
-  }
-  
-  makeMove(board) {
-    let move;
-    const otherPiece = this.piece === "x" ? "o" : "x";
-    move = this._findTwoInRow(board, this.piece) || this._findTwoInRow(board, otherPiece);
-    
-    move = move || this._findRandomMove(board);
-    return this._returnMove(move);
   }
   
   _findTwoInRow(board, piece) {
@@ -90,7 +83,57 @@ class NaivePlayer extends Player {
   }
 }
 
-class AIPlayer extends Player {
+class EasyPlayer extends AIPlayer {
+  constructor(props) {
+    super(props);
+  }
+  
+  makeMove(board) {
+    let move;
+    const otherPiece = this.piece === "x" ? "o" : "x";
+    move = this._findTwoInRow(board, this.piece) || this._findTwoInRow(board, otherPiece);
+    
+    move = move || this._findRandomMove(board);
+    return this._promisifyMove(move);
+  }
+}
+
+class MediumPlayer extends AIPlayer {
+  constructor(props) {
+    super(props);
+  }
+  
+  makeMove(board) {
+    let move;
+    const otherPiece = this.piece === "x" ? "o" : "x";
+    move = this._findTwoInRow(board, this.piece) || this._findTwoInRow(board, otherPiece);
+    
+    if (!move) {
+      const goodMoves = [
+        [0, 0],
+        [0, 2],
+        [1, 1],
+        [2, 0],
+        [2, 2]
+      ];
+      
+      const moves = goodMoves.map(pos => JSON.stringify(pos));
+      const positions = board.openPositions().map(pos => JSON.stringify(pos));
+      for (var i = 0; i < moves.length; i++) {
+        if (positions.includes(moves[i])) {
+          move = goodMoves[i];
+          break;
+        }
+      }
+      move = move || this._findRandomMove(board);
+    }
+    return this._promisifyMove(move);
+  }
+}
+
+// MACHINE LEARNING PLAYER ==========================
+
+class MLPlayer extends Player {
   constructor(props) {
     super(props);
     this.currentGameMemory = [];
@@ -136,7 +179,7 @@ class AIPlayer extends Player {
     
     const moveState = JSON.stringify(move);
     this.currentGameMemory.push([boardState, moveState]);
-    return this._returnMove(move);
+    return this._promisifyMove(move);
   }
   
   receiveGameEnd(winner) {
@@ -169,4 +212,4 @@ class AIPlayer extends Player {
   }
 }
 
-module.exports = { RandomPlayer, AIPlayer, NaivePlayer };
+module.exports = { RandomPlayer, MLPlayer, EasyPlayer, MediumPlayer };
