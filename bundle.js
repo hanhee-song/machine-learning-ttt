@@ -353,6 +353,7 @@ class MediumPlayer extends AIPlayer {
         [2, 0],
         [2, 2]
       ];
+      shuffle(goodMoves);
       
       const moves = goodMoves.map(pos => JSON.stringify(pos));
       const positions = board.openPositions().map(pos => JSON.stringify(pos));
@@ -447,6 +448,20 @@ class MLPlayer extends Player {
     });
     this.currentGameMemory = [];
   }
+}
+
+// Good ol' Fisher-Yates Shuffle
+
+function shuffle(array) {
+  let counter = array.length;
+  while (counter > 0) {
+    let i = Math.floor(Math.random() * counter);
+    counter--;
+    let temp = array[counter];
+    array[counter] = array[i];
+    array[i] = temp;
+  }
+  return array;
 }
 
 module.exports = { RandomPlayer, MLPlayer, EasyPlayer, MediumPlayer };
