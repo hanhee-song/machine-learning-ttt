@@ -41,6 +41,14 @@ class RandomPlayer extends Player {
   }
 }
 
+class SimplePlayer extends Player {
+  constructor(props) {
+    super(props);
+  }
+  
+  
+}
+
 class AIPlayer extends Player {
   constructor(props) {
     super(props);
@@ -64,7 +72,7 @@ class AIPlayer extends Player {
       positions.forEach((pos) => {
         const stringPos = JSON.stringify(pos);
         const score = this.memory[boardState][stringPos] || 0;
-        if (score < 10) {
+        if (score >= 10) {
           totalWeight += 10 + score;
         }
         weightArr.push(totalWeight);
@@ -78,6 +86,9 @@ class AIPlayer extends Player {
         }
       }
       if (!move) {
+        // You hit this because your AI didn't find any favorable moves.
+        // Your AI needs to rethink. Or maybe you need to rethink
+        // for your AI.
         debugger;
         move = this._findRandomMove(board);
       }
@@ -102,6 +113,9 @@ class AIPlayer extends Player {
     }
     this.currentGameMemory.forEach((arr, i) => {
       let val = factor * (i + 1);
+      if (i === arr.length - 1) {
+        
+      }
       const board = arr[0];
       const move = arr[1];
       if (this.memory[board]) {
@@ -116,18 +130,6 @@ class AIPlayer extends Player {
     });
     this.currentGameMemory = [];
   }
-  
-  // getMoveFactor(boardState) {
-  //   let factor = 0;
-  //   if (!this.memory[boardState]) {
-  //     return factor;
-  //   }
-  //
-  //   Object.values(this.memory[boardState]).forEach((val) => {
-  //     factor += val;
-  //   });
-  //   return factor;
-  // }
 }
 
 module.exports = { RandomPlayer, AIPlayer };
