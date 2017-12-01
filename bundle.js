@@ -282,12 +282,14 @@ class RandomPlayer extends Player {
   }
 }
 
-class SimplePlayer extends Player {
+class NaivePlayer extends Player {
   constructor(props) {
     super(props);
   }
   
-  
+  makeMove(board) {
+    let move;
+  }
 }
 
 class AIPlayer extends Player {
@@ -313,7 +315,7 @@ class AIPlayer extends Player {
       positions.forEach((pos) => {
         const stringPos = JSON.stringify(pos);
         const score = this.memory[boardState][stringPos] || 0;
-        if (score >= 10) {
+        if (score > -10) {
           totalWeight += 10 + score;
         }
         weightArr.push(totalWeight);
@@ -335,10 +337,7 @@ class AIPlayer extends Player {
       }
     }
     
-    
     const moveState = JSON.stringify(move);
-    
-    
     this.currentGameMemory.push([boardState, moveState]);
     return this._returnMove(move);
   }
