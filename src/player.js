@@ -57,7 +57,7 @@ class AIPlayer extends Player {
     const positions = board.openPositions();
     
     if (!this.memory[boardState]) {
-      move = this._makeRandomMove(board);
+      move = this._findRandomMove(board);
     } else {
       let totalWeight = 0;
       const weightArr = [];
@@ -70,14 +70,19 @@ class AIPlayer extends Player {
       
       const rand = Math.floor(Math.random() * totalWeight);
       weightArr.forEach((weight, i) => {
-        if (rand <= weight) {
+        if (rand >= weight) {
           move = positions[i];
         }
       });
+      if (!move) {
+        debugger;
+        move = this._findRandomMove(board);
+      }
     }
     
     
     const moveState = JSON.stringify(move);
+    
     
     this.currentGameMemory.push([boardState, moveState]);
     return this._returnMove(move);
@@ -92,19 +97,18 @@ class AIPlayer extends Player {
     } else {
       factor = -1;
     }
-    
     this.currentGameMemory.forEach((arr, i) => {
-      factor += factor;
+      let val = factor * (i + 1);
       const board = arr[0];
       const move = arr[1];
       if (this.memory[board]) {
         if (this.memory[board][move]) {
-          this.memory[board][move] += factor;
+          this.memory[board][move] += val;
         } else {
-          this.memory[board][move] = factor;
+          this.memory[board][move] = val;
         }
       } else {
-        this.memory[board] = { [move]: factor };
+        this.memory[board] = { [move]: val };
       }
     });
     this.currentGameMemory = [];

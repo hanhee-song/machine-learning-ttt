@@ -52,7 +52,7 @@ class Board {
         return row.values().next().value;
       }
       if (col.size === 1 && !col.has(" ")) {
-        return row.values().next().value;
+        return col.values().next().value;
       }
     }
     
