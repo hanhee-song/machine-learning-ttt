@@ -131,6 +131,8 @@ class Game {
     this.score1 = 0;
     this.score2 = 0;
     this.ties = 0;
+    this.paused = false;
+    this.running = false;
   }
   
   newGame(size = 3, player1 = new AIPlayer(), player2 = new RandomPlayer()) {
@@ -146,17 +148,27 @@ class Game {
   
   startGame() {
     this._takeTurn();
+    this.running = true;
+  }
+  
+  changePauseState() {
+    this.paused = !this.paused;
+    if (!this.paused && this.running) {
+      this._takeTurn();
+    }
   }
   
   _takeTurn() {
     if (this.board.isFull() || this.board.isGameOver()) {
       // optimize later: winner is run 3 times here
       const winner = this.board.winner();
-      this.updateScore();
+      this._updateScore();
       this.board.resetGrid();
       this.player1.receiveGameEnd(winner);
       this.player2.receiveGameEnd(winner);
-      debugger;
+      if (this.paused) {
+        return;
+      }
     }
     this.currentPlayer.makeMove(this.board)
       .then(
@@ -174,7 +186,7 @@ class Game {
       );
   }
   
-  updateScore() {
+  _updateScore() {
     switch (this.board.winner()) {
       case "x":
         this.score1++;
@@ -211,6 +223,11 @@ document.addEventListener("DOMContentLoaded", () => {
   
   game.newGame();
   game.startGame();
+  
+  const pauseButton = document.querySelector(".pause-button");
+  pauseButton.addEventListener("click", (e) => {
+    game.changePauseState();
+  });
   
 });
 

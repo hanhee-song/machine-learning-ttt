@@ -6,4 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
   game.newGame();
   game.startGame();
   
+  const pauseButton = document.querySelector(".pause-button");
+  pauseButton.addEventListener("click", (e) => {
+    game.changePauseState();
+  });
+  
 });
