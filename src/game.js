@@ -20,7 +20,6 @@ class Game {
   newGame(size = 3, player1 = new AIPlayer(), player2 = new RandomPlayer()) {
     this.size = size;
     this.board = new Board(size);
-    this.board.drawInitialBoard();
     this.player1 = player1;
     this.player1.piece = "x";
     this.player2 = player2;
@@ -36,6 +35,7 @@ class Game {
   changePauseState() {
     this.paused = !this.paused;
     if (!this.paused && this.running) {
+      this.board.resetGrid();
       this._takeTurn();
     }
   }
@@ -45,12 +45,12 @@ class Game {
       // optimize later: winner is run 3 times here
       const winner = this.board.winner();
       this._updateScore();
-      this.board.resetGrid();
       this.player1.receiveGameEnd(winner);
       this.player2.receiveGameEnd(winner);
       if (this.paused) {
         return;
       }
+      this.board.resetGrid();
     }
     this.currentPlayer.makeMove(this.board)
       .then(
@@ -66,6 +66,10 @@ class Game {
           }
         }
       );
+  }
+  
+  _endRound() {
+    
   }
   
   _updateScore() {

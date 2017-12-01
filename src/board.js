@@ -2,6 +2,7 @@ class Board {
   constructor(size) {
     this.size = size;
     this.grid = undefined;
+    this.drawInitialBoard();
     this.resetGrid(size);
   }
   
@@ -11,6 +12,8 @@ class Board {
       const row = [];
       for (var j = 0; j < this.size; j++) {
         row.push(" ");
+        const square = document.querySelector(`.s${i}${j}`);
+        square.innerHTML = "";
       }
       grid.push(row);
     }
