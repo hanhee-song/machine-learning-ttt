@@ -95,7 +95,6 @@ class AIPlayer extends Player {
     super(props);
     this.currentGameMemory = [];
     this.memory = {};
-    // this.totalMoveFactor = 0;
   }
   
   makeMove(board) {
@@ -152,7 +151,7 @@ class AIPlayer extends Player {
     this.currentGameMemory.forEach((arr, i) => {
       let val = factor * (i + 1);
       if (i === arr.length - 1) {
-        
+        val = factor * 10;
       }
       const board = arr[0];
       const move = arr[1];

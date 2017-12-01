@@ -3,7 +3,7 @@ const Game = require('./game.js');
 document.addEventListener("DOMContentLoaded", () => {
   const game = new Game();
   
-  game.newGame();
+  game.newGame(3);
   game.startGame();
   
   const pauseButton = document.querySelector(".pause-button");

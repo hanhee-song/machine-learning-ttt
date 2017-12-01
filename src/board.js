@@ -33,11 +33,11 @@ class Board {
       }
     }
   }
-  
-  isGameOver() {
-    const winner = this.winner();
-    return winner && winner !== " ";
-  }
+  // 
+  // isGameOver() {
+  //   const winner = this.winner();
+  //   return winner && winner !== " ";
+  // }
   
   winner() {
     // rows & col

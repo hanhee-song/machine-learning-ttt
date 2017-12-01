@@ -34,11 +34,11 @@ class Board {
       }
     }
   }
-  
-  isGameOver() {
-    const winner = this.winner();
-    return winner && winner !== " ";
-  }
+  // 
+  // isGameOver() {
+  //   const winner = this.winner();
+  //   return winner && winner !== " ";
+  // }
   
   winner() {
     // rows & col
@@ -163,9 +163,8 @@ class Game {
   }
   
   _takeTurn() {
-    if (this.board.isFull() || this.board.isGameOver()) {
-      // optimize later: winner is run 3 times here
-      const winner = this.board.winner();
+    const winner = this.board.winner();
+    if (winner) {
       this._updateScore();
       this.player1.receiveGameEnd(winner);
       this.player2.receiveGameEnd(winner);
@@ -229,7 +228,7 @@ const Game = require('./game.js');
 document.addEventListener("DOMContentLoaded", () => {
   const game = new Game();
   
-  game.newGame();
+  game.newGame(3);
   game.startGame();
   
   const pauseButton = document.querySelector(".pause-button");
@@ -337,7 +336,6 @@ class AIPlayer extends Player {
     super(props);
     this.currentGameMemory = [];
     this.memory = {};
-    // this.totalMoveFactor = 0;
   }
   
   makeMove(board) {
@@ -394,7 +392,7 @@ class AIPlayer extends Player {
     this.currentGameMemory.forEach((arr, i) => {
       let val = factor * (i + 1);
       if (i === arr.length - 1) {
-        
+        val = factor * 10;
       }
       const board = arr[0];
       const move = arr[1];

@@ -42,9 +42,8 @@ class Game {
   }
   
   _takeTurn() {
-    if (this.board.isFull() || this.board.isGameOver()) {
-      // optimize later: winner is run 3 times here
-      const winner = this.board.winner();
+    const winner = this.board.winner();
+    if (winner) {
       this._updateScore();
       this.player1.receiveGameEnd(winner);
       this.player2.receiveGameEnd(winner);
