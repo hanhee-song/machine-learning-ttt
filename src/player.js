@@ -64,16 +64,19 @@ class AIPlayer extends Player {
       positions.forEach((pos) => {
         const stringPos = JSON.stringify(pos);
         const score = this.memory[boardState][stringPos] || 0;
-        totalWeight += 20 + score;
+        if (score < 10) {
+          totalWeight += 10 + score;
+        }
         weightArr.push(totalWeight);
       });
       
       const rand = Math.floor(Math.random() * totalWeight);
-      weightArr.forEach((weight, i) => {
-        if (rand >= weight) {
+      for (var i = 0; i < weightArr.length; i++) {
+        if (rand <= weightArr[i]) {
           move = positions[i];
+          break;
         }
-      });
+      }
       if (!move) {
         debugger;
         move = this._findRandomMove(board);
