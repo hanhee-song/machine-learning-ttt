@@ -48,6 +48,15 @@ class NaivePlayer extends Player {
   
   makeMove(board) {
     let move;
+    const otherPiece = this.piece === "x" ? "o" : "x";
+    move = this._findTwoInRow(board, this.piece) || this._findTwoInRow(board, otherPiece);
+    
+    move = move || this._findRandomMove(board);
+    return this._returnMove(move);
+  }
+  
+  _findTwoInRow(board, piece) {
+    let move;
     // rows & col
     for (var i = 0; i < board.size; i++) {
       const row = [];
@@ -77,8 +86,7 @@ class NaivePlayer extends Player {
     if (diag2.includes(this.piece) && diag2.includes(" ")) {
       move = [diag2.indexOf(" "), board.size - diag2.indexOf(" ")];
     }
-    move = move || this._findRandomMove(board);
-    return this._returnMove(move);
+    return move;
   }
 }
 
