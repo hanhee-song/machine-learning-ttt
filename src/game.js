@@ -64,11 +64,11 @@ class Game {
         break;
       case "o":
         this.score2++;
-        document.querySelector(".score-2-number").innerHTML = this.score1;
+        document.querySelector(".score-2-number").innerHTML = this.score2;
         break;
       case "t":
         this.ties++;
-        document.querySelector(".score-tie-number").innerHTML = this.score1;
+        document.querySelector(".score-tie-number").innerHTML = this.ties;
         break;
     }
   }

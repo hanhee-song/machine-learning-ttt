@@ -46,7 +46,41 @@ class AIPlayer extends Player {
     super(props);
     this.currentGameMemory = [];
     this.memory = {};
-    this.totalMoveFactor = 0;
+    // this.totalMoveFactor = 0;
+  }
+  
+  makeMove(board) {
+    // Machine learning happens here
+    const boardState = JSON.stringify(board.grid);
+    let move;
+    
+    const positions = board.openPositions();
+    
+    if (!this.memory[boardState]) {
+      move = this._makeRandomMove(board);
+    } else {
+      let totalWeight = 0;
+      const weightArr = [];
+      positions.forEach((pos) => {
+        const stringPos = JSON.stringify(pos);
+        const score = this.memory[boardState][stringPos] || 0;
+        totalWeight += 20 + score;
+        weightArr.push(totalWeight);
+      });
+      
+      const rand = Math.floor(Math.random() * totalWeight);
+      weightArr.forEach((weight, i) => {
+        if (rand <= weight) {
+          move = positions[i];
+        }
+      });
+    }
+    
+    
+    const moveState = JSON.stringify(move);
+    
+    this.currentGameMemory.push([boardState, moveState]);
+    return this._returnMove(move);
   }
   
   receiveGameEnd(winner) {
@@ -67,24 +101,26 @@ class AIPlayer extends Player {
         if (this.memory[board][move]) {
           this.memory[board][move] += factor;
         } else {
-          this.memory[board][move] = 10 + factor;
+          this.memory[board][move] = factor;
         }
       } else {
-        this.memory[board] = { [move]: 10 + factor };
+        this.memory[board] = { [move]: factor };
       }
     });
     this.currentGameMemory = [];
-    console.log(this.memory);
   }
   
-  makeMove(board) {
-    // for now, it'll make a random move and remember it
-    const move = this._findRandomMove(board);
-    const boardState = JSON.stringify(board.grid);
-    const moveState = JSON.stringify(move);
-    this.currentGameMemory.push([boardState, moveState]);
-    return this._returnMove(move);
-  }
+  // getMoveFactor(boardState) {
+  //   let factor = 0;
+  //   if (!this.memory[boardState]) {
+  //     return factor;
+  //   }
+  //
+  //   Object.values(this.memory[boardState]).forEach((val) => {
+  //     factor += val;
+  //   });
+  //   return factor;
+  // }
 }
 
 module.exports = { RandomPlayer, AIPlayer };
