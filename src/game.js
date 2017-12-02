@@ -4,6 +4,7 @@ const MLPlayer = Players.MLPlayer;
 const EasyPlayer = Players.EasyPlayer;
 const MediumPlayer = Players.MediumPlayer;
 const Board = require('./board.js');
+const drawGraph = require('./draw_graph.js');
 
 class Game {
   constructor() {
@@ -15,6 +16,8 @@ class Game {
     this.score1 = 0;
     this.score2 = 0;
     this.ties = 0;
+    this.scoreboard = [];
+    this.scoreRatios = [];
     this.paused = false;
     this.running = false;
   }
@@ -45,9 +48,11 @@ class Game {
   _takeTurn() {
     const winner = this.board.winner();
     if (winner) {
-      this._updateScore();
+      this._updateScore(winner);
+      this.scoreboard.push(winner);
       this.player1.receiveGameEnd(winner);
       this.player2.receiveGameEnd(winner);
+      this._drawGraph();
       if (this.paused) {
         return;
       }
@@ -69,12 +74,9 @@ class Game {
       );
   }
   
-  _endRound() {
-    
-  }
-  
-  _updateScore() {
-    switch (this.board.winner()) {
+  _updateScore(winner) {
+    // this.scoreboard.push(winner);
+    switch (winner) {
       case "x":
         this.score1++;
         document.querySelector(".score-1-number").innerHTML = this.score1;
@@ -97,6 +99,56 @@ class Game {
     } else {
       this.currentPlayer = this.player1;
     }
+  }
+  
+  // D3 MAGIC HAPPENS HERE ============
+  
+  _queueDraw() {
+    if (!this.drawing) {
+      this.drawing = true;
+      setTimeout(() => {
+        this.drawing = false;
+        drawGraph(this.scoreRatios);
+      }, 100);
+    }
+  }
+  
+  _drawGraph() {
+    const totalRuns = this.score1 + this.score2 + this.ties;
+    
+    // TODO: Lots of room for optimizations here!
+    
+    let score1 = 0;
+    let score2 = 0;
+    let ties = 0;
+    let runs = 0;
+    
+    for (var i = this.scoreboard.length - 100; i < this.scoreboard.length; i++) {
+      runs++;
+      switch (this.scoreboard[i]) {
+        case this.player1.piece:
+          score1++;
+          break;
+        case this.player2.piece:
+          score2++;
+          break;
+        case "t":
+          ties++;
+          break;
+      }
+    }
+    
+    this.scoreRatios.push({
+      id: totalRuns,
+      player1: score1 / runs,
+      player2: score2 / runs,
+      ties: ties / runs,
+    });
+    if (this.scoreRatios.length > 100) {
+      this.scoreRatios.shift();
+    }
+    
+    this._queueDraw();
   }
 }
 

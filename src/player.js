@@ -139,6 +139,12 @@ class MLPlayer extends Player {
     super(props);
     this.currentGameMemory = [];
     this.memory = {};
+    
+    // LEARNING FACTORS
+    this.winFactor = 2;
+    this.tieFactor = 1;
+    this.loseFactor = -2;
+    this.factorThreshold = 10;
   }
   
   makeMove(board) {
@@ -156,8 +162,8 @@ class MLPlayer extends Player {
       positions.forEach((pos) => {
         const stringPos = JSON.stringify(pos);
         const score = this.memory[boardState][stringPos] || 0;
-        if (score > -10) {
-          totalWeight += 10 + score;
+        if (score > -this.factorThreshold) {
+          totalWeight += this.factorThreshold + score;
         }
         weightArr.push(totalWeight);
       });
@@ -186,16 +192,16 @@ class MLPlayer extends Player {
   receiveGameEnd(winner) {
     let factor;
     if (winner === this.piece) {
-      factor = 1;
+      factor = this.winFactor;
     } else if (winner === "t") {
-      factor = 0;
+      factor = this.tieFactor;
     } else {
-      factor = -1;
+      factor = this.loseFactor;
     }
     this.currentGameMemory.forEach((arr, i) => {
       let val = factor * (i + 1);
       if (i === arr.length - 1) {
-        val = factor * 10;
+        val = factor * 5;
       }
       const board = arr[0];
       const move = arr[1];

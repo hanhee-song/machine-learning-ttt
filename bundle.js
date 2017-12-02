@@ -114,12 +114,72 @@ class Board {
 module.exports = Board;
 
 },{}],2:[function(require,module,exports){
+function drawGraph(data) {
+  // debugger;
+  
+  const svg = d3.select("svg");
+  svg.selectAll("g").remove();
+  
+  const margin = {top: 20, right: 20, bottom: 30, left: 50},
+    width = Number(svg.attr("width")) - margin.left - margin.right,
+    height = Number(svg.attr("height")) - margin.top - margin.bottom,
+    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  
+  const x = d3.scaleBand()
+    .rangeRound([0, width]);
+  const y = d3.scaleLinear()
+    .rangeRound([height, 0]);
+  
+  const area = d3.area()
+    .x(d => x(d.id))
+    .y0(height)
+    .y1(d => y(d.player1));
+    
+  const line = d3.line()
+    .x(d => x(d.id))
+    .y(d => y(d.player1));
+  
+  x.domain(data.map(d => d.id));
+  y.domain([0, d3.max(data, d => d.player1)]);
+  
+  // g.append("path")
+  //     .data([data])
+  //     .attr("fill", "steelblue")
+  //     .attr("class", "area")
+  //     .attr("d", area);
+      
+  g.append("path")
+      .data([data])
+      .attr("class", "line")
+      .attr("d", line);
+
+  g.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x)
+        .tickArguments([10])
+      );
+
+  g.append("g")
+      .call(d3.axisLeft(y))
+    .append("text")
+      .attr("fill", "#000")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", "0.71em")
+      .attr("text-anchor", "end")
+      .text("Win Ratios");
+}
+
+module.exports = drawGraph;
+
+},{}],3:[function(require,module,exports){
 const Players = require('./player.js');
 const RandomPlayer = Players.RandomPlayer;
 const MLPlayer = Players.MLPlayer;
 const EasyPlayer = Players.EasyPlayer;
 const MediumPlayer = Players.MediumPlayer;
 const Board = require('./board.js');
+const drawGraph = require('./draw_graph.js');
 
 class Game {
   constructor() {
@@ -131,6 +191,8 @@ class Game {
     this.score1 = 0;
     this.score2 = 0;
     this.ties = 0;
+    this.scoreboard = [];
+    this.scoreRatios = [];
     this.paused = false;
     this.running = false;
   }
@@ -161,9 +223,11 @@ class Game {
   _takeTurn() {
     const winner = this.board.winner();
     if (winner) {
-      this._updateScore();
+      this._updateScore(winner);
+      this.scoreboard.push(winner);
       this.player1.receiveGameEnd(winner);
       this.player2.receiveGameEnd(winner);
+      this._drawGraph();
       if (this.paused) {
         return;
       }
@@ -185,12 +249,9 @@ class Game {
       );
   }
   
-  _endRound() {
-    
-  }
-  
-  _updateScore() {
-    switch (this.board.winner()) {
+  _updateScore(winner) {
+    // this.scoreboard.push(winner);
+    switch (winner) {
       case "x":
         this.score1++;
         document.querySelector(".score-1-number").innerHTML = this.score1;
@@ -214,11 +275,61 @@ class Game {
       this.currentPlayer = this.player1;
     }
   }
+  
+  // D3 MAGIC HAPPENS HERE ============
+  
+  _queueDraw() {
+    if (!this.drawing) {
+      this.drawing = true;
+      setTimeout(() => {
+        this.drawing = false;
+        drawGraph(this.scoreRatios);
+      }, 100);
+    }
+  }
+  
+  _drawGraph() {
+    const totalRuns = this.score1 + this.score2 + this.ties;
+    
+    // TODO: Lots of room for optimizations here!
+    
+    let score1 = 0;
+    let score2 = 0;
+    let ties = 0;
+    let runs = 0;
+    
+    for (var i = this.scoreboard.length - 100; i < this.scoreboard.length; i++) {
+      runs++;
+      switch (this.scoreboard[i]) {
+        case this.player1.piece:
+          score1++;
+          break;
+        case this.player2.piece:
+          score2++;
+          break;
+        case "t":
+          ties++;
+          break;
+      }
+    }
+    
+    this.scoreRatios.push({
+      id: totalRuns,
+      player1: score1 / runs,
+      player2: score2 / runs,
+      ties: ties / runs,
+    });
+    if (this.scoreRatios.length > 100) {
+      this.scoreRatios.shift();
+    }
+    
+    this._queueDraw();
+  }
 }
 
 module.exports = Game;
 
-},{"./board.js":1,"./player.js":4}],3:[function(require,module,exports){
+},{"./board.js":1,"./draw_graph.js":2,"./player.js":5}],4:[function(require,module,exports){
 const Game = require('./game.js');
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -234,7 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
 });
 
-},{"./game.js":2}],4:[function(require,module,exports){
+},{"./game.js":3}],5:[function(require,module,exports){
 class Player {
   constructor(props) {
     this.piece = null;
@@ -376,6 +487,12 @@ class MLPlayer extends Player {
     super(props);
     this.currentGameMemory = [];
     this.memory = {};
+    
+    // LEARNING FACTORS
+    this.winFactor = 2;
+    this.tieFactor = 1;
+    this.loseFactor = -2;
+    this.factorThreshold = 10;
   }
   
   makeMove(board) {
@@ -393,8 +510,8 @@ class MLPlayer extends Player {
       positions.forEach((pos) => {
         const stringPos = JSON.stringify(pos);
         const score = this.memory[boardState][stringPos] || 0;
-        if (score > -10) {
-          totalWeight += 10 + score;
+        if (score > -this.factorThreshold) {
+          totalWeight += this.factorThreshold + score;
         }
         weightArr.push(totalWeight);
       });
@@ -423,16 +540,16 @@ class MLPlayer extends Player {
   receiveGameEnd(winner) {
     let factor;
     if (winner === this.piece) {
-      factor = 1;
+      factor = this.winFactor;
     } else if (winner === "t") {
-      factor = 0;
+      factor = this.tieFactor;
     } else {
-      factor = -1;
+      factor = this.loseFactor;
     }
     this.currentGameMemory.forEach((arr, i) => {
       let val = factor * (i + 1);
       if (i === arr.length - 1) {
-        val = factor * 10;
+        val = factor * 5;
       }
       const board = arr[0];
       const move = arr[1];
@@ -466,4 +583,4 @@ function shuffle(array) {
 
 module.exports = { RandomPlayer, MLPlayer, EasyPlayer, MediumPlayer };
 
-},{}]},{},[3]);
+},{}]},{},[4]);
