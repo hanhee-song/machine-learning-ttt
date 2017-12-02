@@ -146,7 +146,7 @@ function drawGraph(data) {
   
   const area2 = d3.area()
     .x(d => x(d.id))
-    .y0(height)
+    .y0(d => y(d.player1))
     .y1(d => y(d.ties + d.player1));
     
   const line2 = d3.line()
@@ -155,12 +155,12 @@ function drawGraph(data) {
   
   const area3 = d3.area()
     .x(d => x(d.id))
-    .y0(height)
+    .y0(d => y(d.ties + d.player1))
     .y1(d => y(1));
     
   const line3 = d3.line()
     .x(d => x(d.id))
-    .y(d => y(d.player2 + d.ties + d.player1));
+    .y(d => y(1));
   
   let xArr;
   if (data.length < 200) {
@@ -175,36 +175,32 @@ function drawGraph(data) {
   g.append("path")
     .data([data])
     .attr("fill", "orange")
-    .attr("class", "area")
+    .attr("class", "area area3")
     .attr("d", area3);
   
   g.append("path")
     .data([data])
-    .attr("class", "line")
-    .attr("stroke", "orange")
+    .attr("class", "line line3")
     .attr("d", line3);
   
   g.append("path")
     .data([data])
-    .attr("fill", "red")
-    .attr("class", "area")
+    .attr("class", "area area2")
     .attr("d", area2);
       
   g.append("path")
     .data([data])
-    .attr("class", "line")
-    .attr("stroke", "red")
+    .attr("class", "line line2")
     .attr("d", line2);
     
   g.append("path")
     .data([data])
-    .attr("fill", "steelblue")
-    .attr("class", "area")
+    .attr("class", "area area1")
     .attr("d", area1);
     
   g.append("path")
     .data([data])
-    .attr("class", "line")
+    .attr("class", "line line1")
     .attr("d", line1);
 
   // g.append("g")
@@ -215,7 +211,6 @@ function drawGraph(data) {
   g.append("g")
       .call(d3.axisLeft(y))
     .append("text")
-      .attr("fill", "#000")
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
       .attr("dy", "0.71em")
@@ -542,7 +537,7 @@ class MLPlayer extends Player {
     this.memory = {};
     
     // LEARNING FACTORS
-    this.winFactor = 2;
+    this.winFactor = 1;
     this.tieFactor = 0;
     this.loseFactor = -5;
     this.factorThreshold = 10;

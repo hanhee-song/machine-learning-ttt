@@ -120,6 +120,21 @@ body {
 
 .line {
   fill: none;
-  stroke: steelblue;
-  stroke-width: 2px;
+  stroke-width: 1.5px;
 }
+
+.area {
+  opacity: .2;
+}
+
+.line1 { stroke: #2b7c17; }
+
+.area1 { fill: #2b7c17; }
+
+.line2 { stroke: #38437f; }
+
+.area2 { fill: #38437f; }
+
+.line3 { stroke: #a32a2a; }
+
+.area3 { fill: #a32a2a; }
