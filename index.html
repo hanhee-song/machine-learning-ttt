@@ -6,48 +6,39 @@
     <link rel="stylesheet" href="/styles/style.css">
     <script src="./bundle.js" charset="utf-8"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
   </head>
   <body>
     <div class="main-container">
-      <div id="board">
-        
-      </div>
-      
-      
-      <div class="scores-container">
-        <div class="score score-1">
-          <div class="score-1-title">
-            Player 1:
-          </div>
-          <div class="score-1-number">
-            
-          </div>
+      <div class="left-pane">
+        <div id="board">
+          
         </div>
-        <div class="score score-2">
-          <div class="score-2-title">
-            Player 2:
+        <div class="controls-container">
+          <div class="scores-container">
+            <div class="score score-1">
+              <div class="score-1"></div>
+            </div>
+            <div class="score score-2">
+              <div class="score-2"></div>
+            </div>
+            <div class="score score-tie">
+              <div class="score-tie"></div>
+            </div>
           </div>
-          <div class="score-2-number">
-            
-          </div>
-        </div>
-        <div class="score score-tie">
-          <div class="score-tie-title">
-            Ties:
-          </div>
-          <div class="score-tie-number">
-            
+          <div class="pause-container">
+            <div class="pause-button">
+              pause
+            </div>
           </div>
         </div>
       </div>
-      <svg width="500" height="500"></svg>
+      
+      <div class="right-pane">
+        <svg width="500" height="500"></svg>
+      </div>
       
     </div>
     
-    <div class="pause-container">
-      <div class="pause-button">
-        pause
-      </div>
-    </div>
   </body>
 </html>

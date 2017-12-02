@@ -79,17 +79,18 @@ class Game {
     switch (winner) {
       case "x":
         this.score1++;
-        document.querySelector(".score-1-number").innerHTML = this.score1;
+        document.querySelector(".score-1").innerHTML = `Player 1: ${this.score1}`;
         break;
       case "o":
         this.score2++;
-        document.querySelector(".score-2-number").innerHTML = this.score2;
+        document.querySelector(".score-2").innerHTML = `Player 2: ${this.score2}`;
         break;
       case "t":
         this.ties++;
-        document.querySelector(".score-tie-number").innerHTML = this.ties;
+        document.querySelector(".score-tie").innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;Ties: ${this.ties}`;
         break;
     }
+    // document.querySelector(".scores-number").innerHTML = `${this.score1} / ${this.score2} / ${this.ties}`;
   }
   
   _switchPlayers() {

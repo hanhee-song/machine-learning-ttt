@@ -22,6 +22,7 @@ time, mark, audio, video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
+  font-family: "Inconsolata", sans-serif;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -51,6 +52,7 @@ table {
 
 * {
   box-sizing: border-box;
+  font-family: "Inconsolata", sans-serif;
 }
 
 a {
@@ -77,6 +79,17 @@ body {
   display: flex;
 }
 
+.left-pane {
+  width: 502px;
+  display: flex;
+}
+
+.right-pane {
+  width: 500px;
+}
+
+/**** TTT BOARD ****/
+
 #board {
   border: 1px solid red;
   width: 302px;
@@ -91,14 +104,25 @@ body {
   width: 100px;
 }
 
+/**** CONTROLS ****/
+
+.controls-container {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  border: 1px solid red;
+}
+
 .scores-container {
   border: 1px solid red;
   width: 200px;
+  height: 90px;
 }
 
 .score {
   border: 1px solid blue;
-  height: 100px;
+  height: 30px;
 }
 
 .pause-button {
