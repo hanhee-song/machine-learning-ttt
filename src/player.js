@@ -142,8 +142,8 @@ class MLPlayer extends Player {
     
     // LEARNING FACTORS
     this.winFactor = 2;
-    this.tieFactor = 1;
-    this.loseFactor = -2;
+    this.tieFactor = 0;
+    this.loseFactor = -5;
     this.factorThreshold = 10;
   }
   

@@ -114,6 +114,11 @@ class Board {
 module.exports = Board;
 
 },{}],2:[function(require,module,exports){
+const ORDERED_ARR = [];
+for (var i = 0; i < 200; i++) {
+  ORDERED_ARR.push(i);
+}
+
 function drawGraph(data) {
   // debugger;
   
@@ -130,35 +135,83 @@ function drawGraph(data) {
   const y = d3.scaleLinear()
     .rangeRound([height, 0]);
   
-  const area = d3.area()
+  const area1 = d3.area()
     .x(d => x(d.id))
     .y0(height)
     .y1(d => y(d.player1));
     
-  const line = d3.line()
+  const line1 = d3.line()
     .x(d => x(d.id))
     .y(d => y(d.player1));
   
-  x.domain(data.map(d => d.id));
-  y.domain([0, d3.max(data, d => d.player1)]);
+  const area2 = d3.area()
+    .x(d => x(d.id))
+    .y0(height)
+    .y1(d => y(d.ties + d.player1));
+    
+  const line2 = d3.line()
+    .x(d => x(d.id))
+    .y(d => y(d.ties + d.player1));
   
-  // g.append("path")
-  //     .data([data])
-  //     .attr("fill", "steelblue")
-  //     .attr("class", "area")
-  //     .attr("d", area);
+  const area3 = d3.area()
+    .x(d => x(d.id))
+    .y0(height)
+    .y1(d => y(1));
+    
+  const line3 = d3.line()
+    .x(d => x(d.id))
+    .y(d => y(d.player2 + d.ties + d.player1));
+  
+  let xArr;
+  if (data.length < 200) {
+    xArr = ORDERED_ARR;
+  } else {
+    xArr = data.map(d => d.id);
+  }
+  
+  x.domain(xArr);
+  y.domain([0, 1]);
+  
+  g.append("path")
+    .data([data])
+    .attr("fill", "orange")
+    .attr("class", "area")
+    .attr("d", area3);
+  
+  g.append("path")
+    .data([data])
+    .attr("class", "line")
+    .attr("stroke", "orange")
+    .attr("d", line3);
+  
+  g.append("path")
+    .data([data])
+    .attr("fill", "red")
+    .attr("class", "area")
+    .attr("d", area2);
       
   g.append("path")
-      .data([data])
-      .attr("class", "line")
-      .attr("d", line);
+    .data([data])
+    .attr("class", "line")
+    .attr("stroke", "red")
+    .attr("d", line2);
+    
+  g.append("path")
+    .data([data])
+    .attr("fill", "steelblue")
+    .attr("class", "area")
+    .attr("d", area1);
+    
+  g.append("path")
+    .data([data])
+    .attr("class", "line")
+    .attr("d", line1);
 
-  g.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x)
-        .tickArguments([10])
-      );
-
+  // g.append("g")
+  //     .attr("transform", "translate(0," + height + ")")
+  //     .call(d3.axisBottom(x))
+  //     .ticks(10);
+  
   g.append("g")
       .call(d3.axisLeft(y))
     .append("text")
@@ -284,7 +337,7 @@ class Game {
       setTimeout(() => {
         this.drawing = false;
         drawGraph(this.scoreRatios);
-      }, 100);
+      }, 40);
     }
   }
   
@@ -298,7 +351,7 @@ class Game {
     let ties = 0;
     let runs = 0;
     
-    for (var i = this.scoreboard.length - 100; i < this.scoreboard.length; i++) {
+    for (var i = Math.max(0, this.scoreboard.length - 200); i < this.scoreboard.length; i++) {
       runs++;
       switch (this.scoreboard[i]) {
         case this.player1.piece:
@@ -319,7 +372,7 @@ class Game {
       player2: score2 / runs,
       ties: ties / runs,
     });
-    if (this.scoreRatios.length > 100) {
+    if (this.scoreRatios.length > 200) {
       this.scoreRatios.shift();
     }
     
@@ -490,8 +543,8 @@ class MLPlayer extends Player {
     
     // LEARNING FACTORS
     this.winFactor = 2;
-    this.tieFactor = 1;
-    this.loseFactor = -2;
+    this.tieFactor = 0;
+    this.loseFactor = -5;
     this.factorThreshold = 10;
   }
   

@@ -109,7 +109,7 @@ class Game {
       setTimeout(() => {
         this.drawing = false;
         drawGraph(this.scoreRatios);
-      }, 100);
+      }, 40);
     }
   }
   
@@ -123,7 +123,7 @@ class Game {
     let ties = 0;
     let runs = 0;
     
-    for (var i = this.scoreboard.length - 100; i < this.scoreboard.length; i++) {
+    for (var i = Math.max(0, this.scoreboard.length - 200); i < this.scoreboard.length; i++) {
       runs++;
       switch (this.scoreboard[i]) {
         case this.player1.piece:
@@ -144,7 +144,7 @@ class Game {
       player2: score2 / runs,
       ties: ties / runs,
     });
-    if (this.scoreRatios.length > 100) {
+    if (this.scoreRatios.length > 200) {
       this.scoreRatios.shift();
     }
     
