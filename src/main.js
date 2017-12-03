@@ -35,4 +35,16 @@ document.addEventListener("DOMContentLoaded", () => {
   sliderLose.addEventListener("mousemove", (e) => {
     sliderLoseVal.innerHTML = sliderLose.value;
   });
+  
+  const select1 = document.querySelector(".select-1");
+  const sliderContainer1 = document.querySelector(".sliders-container-1");
+  select1.addEventListener("change", (e) => {
+    if (select1.value === "ML") {
+      sliderContainer1.style.height = "100px";
+      sliderContainer1.setAttribute("height", "100px");
+    } else {
+      sliderContainer1.style.height = "0";
+      sliderContainer1.setAttribute("height", "0");
+    }
+  });
 });
