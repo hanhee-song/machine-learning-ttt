@@ -16,11 +16,16 @@
         <div id="board"></div>
         
         <div class="controls-container">
+          
+          <!-- SCOREBOARD -->
+          
           <div class="scores-container">
             <div class="score score-2">Player 2: 0</div>
             <div class="score score-tie">&nbsp;&nbsp;&nbsp;&nbsp;Ties: 0</div>
             <div class="score score-1">Player 1: 0</div>
           </div>
+          
+          <!-- PLAYER 1 -->
           
           <div class="options-container">
             <div class="options options-1">
@@ -33,26 +38,58 @@
                 <option value="ML">ML</option>
               </select>
             </div>
-            <div class="sliders-container-1">
+            <div class="sliders-container sliders-container-1">
               <div class="slider-container">
                 <div class="slider-text slider-win-label">&nbsp;Win: </div>
-                <input class="slider slider-win" type="range" min="-5" max="5" value="1">
-                <div class="slider-number slider-win-value">1</div>
+                <input class="slider slider-win-1" type="range" min="-5" max="5" value="1">
+                <div class="slider-number slider-win-value-1">1</div>
               </div>
               <div class="slider-container">
                 <div class="slider-text slider-tie-label">&nbsp;Tie: </div>
-                <input class="slider slider-tie" type="range" min="-5" max="5" value="0">
-                <div class="slider-number slider-tie-value">0</div>
+                <input class="slider slider-tie-1" type="range" min="-5" max="5" value="0">
+                <div class="slider-number slider-tie-value-1">0</div>
               </div>
               <div class="slider-container">
                 <div class="slider-text slider-lose-label">Lose: </div>
-                <input class="slider slider-lose" type="range" min="-5" max="5" value="-5">
-                <div class="slider-number slider-lose-value">-5</div>
+                <input class="slider slider-lose-1" type="range" min="-5" max="5" value="-5">
+                <div class="slider-number slider-lose-value-1">-5</div>
               </div>
             </div>
-            
-            
           </div>
+          
+          <!-- PLAYER 2 -->
+          
+          <div class="options-container">
+            <div class="options options-2">
+              <div class="option-name">
+                Player 2:
+              </div>
+              <select class="select select-2" name="">
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="ML">ML</option>
+              </select>
+            </div>
+            <div class="sliders-container sliders-container-2">
+              <div class="slider-container">
+                <div class="slider-text slider-win-label">&nbsp;Win: </div>
+                <input class="slider slider-win-2" type="range" min="-5" max="5" value="1">
+                <div class="slider-number slider-win-value-2">1</div>
+              </div>
+              <div class="slider-container">
+                <div class="slider-text slider-tie-label">&nbsp;Tie: </div>
+                <input class="slider slider-tie-2" type="range" min="-5" max="5" value="0">
+                <div class="slider-number slider-tie-value-2">0</div>
+              </div>
+              <div class="slider-container">
+                <div class="slider-text slider-lose-label">Lose: </div>
+                <input class="slider slider-lose-2" type="range" min="-5" max="5" value="-5">
+                <div class="slider-number slider-lose-value-2">-5</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- BUTTONS ON BOTTOM -->
           
           <div class="buttons-container">
             <div class="play-button"><i class="toggle-play-icon fa fa-play" aria-hidden="true"></i></div>

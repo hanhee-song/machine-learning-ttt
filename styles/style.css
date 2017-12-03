@@ -166,7 +166,7 @@ body {
   margin-left: 10px;
 }
 
-.sliders-container-1 {
+.sliders-container {
   display: flex;
   flex-direction: column;
   height: 0;
