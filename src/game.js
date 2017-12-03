@@ -18,7 +18,7 @@ class Game {
     this.ties = 0;
     this.scoreboard = [];
     this.scoreRatios = [];
-    this.paused = false;
+    this.paused = true;
     this.running = false;
   }
   
@@ -42,9 +42,28 @@ class Game {
   }
   
   startGame() {
-    this._takeTurn();
     this.running = true;
+    this.paused = false;
+    this._takeTurn();
     this.changeIcon();
+  }
+  
+  stopGame() {
+    this.running = false;
+    this.paused = true;
+    this.changeIcon();
+    this.score1 = 0;
+    this.score2 = 0;
+    this.ties = 0;
+    this.scoreboard = [];
+    this.scoreRatios = [];
+    document.querySelector(".score-1").innerHTML = `Player 1: ${this.score1}`;
+    document.querySelector(".score-2").innerHTML = `Player 2: ${this.score2}`;
+    document.querySelector(".score-tie").innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;Ties: ${this.ties}`;
+    setTimeout(() => {
+      
+      this.board.resetGrid();
+    }, 0);
   }
   
   changePauseState() {
@@ -68,6 +87,9 @@ class Game {
   }
   
   _takeTurn() {
+    if (!this.running) {
+      return;
+    }
     const winner = this.board.winner();
     if (winner) {
       this._updateScore(winner);
@@ -84,9 +106,11 @@ class Game {
       .then(
         pos => {
           if (this.board.validPos(pos)) {
-            this.board.placePiece(pos, this.currentPlayer.piece);
-            this._switchPlayers();
-            this._takeTurn();
+            if (this.running) {
+              this.board.placePiece(pos, this.currentPlayer.piece);
+              this._switchPlayers();
+              this._takeTurn();
+            }
           } else {
             debugger;
             // You hit this debugger because your AI made some
@@ -112,7 +136,6 @@ class Game {
         document.querySelector(".score-tie").innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;Ties: ${this.ties}`;
         break;
     }
-    // document.querySelector(".scores-number").innerHTML = `${this.score1} / ${this.score2} / ${this.ties}`;
   }
   
   _switchPlayers() {

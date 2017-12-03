@@ -9,6 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
   playButton.addEventListener("click", (e) => {
     game.playGame();
   });
+  const stopButton = document.querySelector(".stop-button");
+  stopButton.addEventListener("click", (e) => {
+    game.stopGame();
+  });
   
   const sliderWin1 = document.querySelector(".slider-win-1");
   const sliderWinVal1 = document.querySelector(".slider-win-value-1");
@@ -40,25 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
       arr[1].innerHTML = arr[0].value;
     });
   });
-  
-  // sliderWin.addEventListener("change", (e) => {
-  //   sliderWinVal.innerHTML = sliderWin.value;
-  // });
-  // sliderWin.addEventListener("mousemove", (e) => {
-  //   sliderWinVal.innerHTML = sliderWin.value;
-  // });
-  // sliderTie.addEventListener("change", (e) => {
-  //   sliderTieVal.innerHTML = sliderTie.value;
-  // });
-  // sliderTie.addEventListener("mousemove", (e) => {
-  //   sliderTieVal.innerHTML = sliderTie.value;
-  // });
-  // sliderLose.addEventListener("change", (e) => {
-  //   sliderLoseVal.innerHTML = sliderLose.value;
-  // });
-  // sliderLose.addEventListener("mousemove", (e) => {
-  //   sliderLoseVal.innerHTML = sliderLose.value;
-  // });
   
   const select1 = document.querySelector(".select-1");
   const sliderContainer1 = document.querySelector(".sliders-container-1");
