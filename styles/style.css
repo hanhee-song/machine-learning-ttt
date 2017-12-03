@@ -66,10 +66,10 @@ a {
 }*/
 
 body {
-  /*background: linear-gradient(0deg, #232b42, #232b42);*/
+  background: linear-gradient(0deg, #232b42, #232b42);
   height: 100%;
   width: 100%;
-  /*color: #d8d8d8;*/
+  color: #d8d8d8;
 }
 
 .main-container {
@@ -122,7 +122,19 @@ body {
 
 .score {
   border: 1px solid blue;
-  height: 30px;
+  height: 25px;
+}
+
+.score-1 {
+  color: #7dd183;
+}
+
+.score-tie {
+  color: #b5d1ff;
+}
+
+.score-2 {
+  color: #e07f7f;
 }
 
 .pause-button {
@@ -142,6 +154,18 @@ body {
 
 /****** D3 *********/
 
+.axis-y line {
+  stroke: #eee;
+}
+
+.axis-y path {
+  stroke: #eee;
+}
+
+.axis-y text {
+  fill: #eee
+}
+
 .line {
   fill: none;
   stroke-width: 1.5px;
@@ -151,14 +175,14 @@ body {
   opacity: .2;
 }
 
-.line1 { stroke: #2b7c17; }
+.line1 { stroke: #7dd183; }
 
-.area1 { fill: #2b7c17; }
+.area1 { fill: #7dd183; }
 
-.line2 { stroke: #38437f; }
+.line2 { stroke: #b5d1ff; }
 
-.area2 { fill: #38437f; }
+.area2 { fill: #b5d1ff; }
 
-.line3 { stroke: #a32a2a; }
+.line3 { stroke: #e07f7f; }
 
-.area3 { fill: #a32a2a; }
+.area3 { fill: #e07f7f; }

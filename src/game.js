@@ -22,7 +22,7 @@ class Game {
     this.running = false;
   }
   
-  newGame(size = 3, player1 = new MLPlayer(), player2 = new MediumPlayer()) {
+  newGame(size = 3, player1 = new MLPlayer(), player2 = new EasyPlayer()) {
     this.size = size;
     this.board = new Board(size);
     this.player1 = player1;

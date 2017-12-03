@@ -4,15 +4,13 @@ for (var i = 0; i < 200; i++) {
 }
 
 function drawGraph(data) {
-  // debugger;
-  
   const svg = d3.select("svg");
   svg.selectAll("g").remove();
   
-  const margin = {top: 20, right: 20, bottom: 30, left: 50},
+  const margin = {top: 20, right: 20, bottom: 30, left: 80},
     width = Number(svg.attr("width")) - margin.left - margin.right,
     height = Number(svg.attr("height")) - margin.top - margin.bottom,
-    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    g = svg.append("g").attr("transform", "translate(" + 40 + "," + margin.top + ")");
   
   const x = d3.scaleBand()
     .rangeRound([0, width]);
@@ -58,7 +56,6 @@ function drawGraph(data) {
   
   g.append("path")
     .data([data])
-    .attr("fill", "orange")
     .attr("class", "area area3")
     .attr("d", area3);
   
@@ -94,6 +91,8 @@ function drawGraph(data) {
   
   g.append("g")
       .call(d3.axisLeft(y))
+      .attr("transform", "translate(0," + -1 + ")")
+    .attr("class", "axis-y")
     .append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
