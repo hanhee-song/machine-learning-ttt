@@ -252,6 +252,7 @@ class Game {
     this.player2 = player2;
     this.player2.piece = "o";
     this.currentPlayer = this.player1;
+    this._queueDraw();
   }
   
   playGame() {
@@ -411,10 +412,31 @@ document.addEventListener("DOMContentLoaded", () => {
     game.playGame();
   });
   
-  const startButton = document.querySelector(".start-button");
-  startButton.addEventListener("click", (e) => {
-  });
+  const sliderWin = document.querySelector(".slider-win");
+  const sliderWinVal = document.querySelector(".slider-win-value");
+  const sliderTie = document.querySelector(".slider-tie");
+  const sliderTieVal = document.querySelector(".slider-tie-value");
+  const sliderLose = document.querySelector(".slider-lose");
+  const sliderLoseVal = document.querySelector(".slider-lose-value");
   
+  sliderWin.addEventListener("change", (e) => {
+    sliderWinVal.innerHTML = sliderWin.value;
+  });
+  sliderWin.addEventListener("mousemove", (e) => {
+    sliderWinVal.innerHTML = sliderWin.value;
+  });
+  sliderTie.addEventListener("change", (e) => {
+    sliderTieVal.innerHTML = sliderTie.value;
+  });
+  sliderTie.addEventListener("mousemove", (e) => {
+    sliderTieVal.innerHTML = sliderTie.value;
+  });
+  sliderLose.addEventListener("change", (e) => {
+    sliderLoseVal.innerHTML = sliderLose.value;
+  });
+  sliderLose.addEventListener("mousemove", (e) => {
+    sliderLoseVal.innerHTML = sliderLose.value;
+  });
 });
 
 },{"./game.js":3}],5:[function(require,module,exports){

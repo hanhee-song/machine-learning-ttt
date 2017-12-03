@@ -144,6 +144,25 @@ body {
   color: #e07f7f;
 }
 
+.slider-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.slider {
+  width: 110px;
+}
+
+.slider-text {
+  margin-left: 5px;
+}
+
+.slider-number {
+  width: 20px;
+  text-align: right;
+  margin-right: 5px;
+}
+
 .buttons-container {
   width: 200px;
   display: flex;

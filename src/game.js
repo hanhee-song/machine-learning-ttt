@@ -30,6 +30,7 @@ class Game {
     this.player2 = player2;
     this.player2.piece = "o";
     this.currentPlayer = this.player1;
+    this._queueDraw();
   }
   
   playGame() {
