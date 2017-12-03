@@ -76,12 +76,16 @@ class Board {
     return true;
   }
   
-  placePiece(pos, piece) {
+  setPiece(pos, piece) {
     if (this.validPos(pos) && this._validPiece(piece)) {
       this.grid[pos[0]][pos[1]] = piece;
     }
     const square = document.querySelector(`.s${pos[0]}${pos[1]}`);
     square.innerHTML = piece;
+  }
+  
+  getPiece(pos) {
+    return this.grid[pos[0]][pos[1]];
   }
   
   _validPiece(piece) {

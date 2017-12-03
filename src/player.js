@@ -55,8 +55,8 @@ class AIPlayer extends Player {
       const row = [];
       const col = [];
       for (var j = 0; j < board.size; j++) {
-        row.push(board.grid[i][j]);
-        col.push(board.grid[j][i]);
+        row.push(board.getPiece([i, j]));
+        col.push(board.getPiece([j, i]));
       }
       if (row.includes(this.piece) && row.includes(" ")) {
         move = [i, row.indexOf(" ")];
@@ -70,8 +70,8 @@ class AIPlayer extends Player {
     const diag1 = [];
     const diag2 = [];
     for (var i = 0; i < board.size; i++) {
-      diag1.push(board.grid[i][i]);
-      diag2.push(board.grid[i][board.size - i]);
+      diag1.push(board.getPiece([i, i]));
+      diag2.push(board.getPiece([i, board.size - i]));
     }
     if (diag1.includes(this.piece) && diag1.includes(" ")) {
       move = [diag1.indexOf(" "), diag1.indexOf(" ")];

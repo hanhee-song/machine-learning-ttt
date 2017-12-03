@@ -107,7 +107,7 @@ class Game {
         pos => {
           if (this.board.validPos(pos)) {
             if (this.running) {
-              this.board.placePiece(pos, this.currentPlayer.piece);
+              this.board.setPiece(pos, this.currentPlayer.piece);
               this._switchPlayers();
               this._takeTurn();
             }

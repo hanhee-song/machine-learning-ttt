@@ -77,12 +77,16 @@ class Board {
     return true;
   }
   
-  placePiece(pos, piece) {
+  setPiece(pos, piece) {
     if (this.validPos(pos) && this._validPiece(piece)) {
       this.grid[pos[0]][pos[1]] = piece;
     }
     const square = document.querySelector(`.s${pos[0]}${pos[1]}`);
     square.innerHTML = piece;
+  }
+  
+  getPiece(pos) {
+    return this.grid[pos[0]][pos[1]];
   }
   
   _validPiece(piece) {
@@ -329,7 +333,7 @@ class Game {
         pos => {
           if (this.board.validPos(pos)) {
             if (this.running) {
-              this.board.placePiece(pos, this.currentPlayer.piece);
+              this.board.setPiece(pos, this.currentPlayer.piece);
               this._switchPlayers();
               this._takeTurn();
             }
@@ -549,8 +553,8 @@ class AIPlayer extends Player {
       const row = [];
       const col = [];
       for (var j = 0; j < board.size; j++) {
-        row.push(board.grid[i][j]);
-        col.push(board.grid[j][i]);
+        row.push(board.getPiece([i, j]));
+        col.push(board.getPiece([j, i]));
       }
       if (row.includes(this.piece) && row.includes(" ")) {
         move = [i, row.indexOf(" ")];
@@ -564,8 +568,8 @@ class AIPlayer extends Player {
     const diag1 = [];
     const diag2 = [];
     for (var i = 0; i < board.size; i++) {
-      diag1.push(board.grid[i][i]);
-      diag2.push(board.grid[i][board.size - i]);
+      diag1.push(board.getPiece([i, i]));
+      diag2.push(board.getPiece([i, board.size - i]));
     }
     if (diag1.includes(this.piece) && diag1.includes(" ")) {
       move = [diag1.indexOf(" "), diag1.indexOf(" ")];
