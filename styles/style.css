@@ -195,13 +195,23 @@ body {
   width: 200px;
   display: flex;
   justify-content: space-around;
-  border: 1px solid red;
+  /*border: 1px solid red;*/
 }
 
-.play-button {
-  border: 1px solid blue;
+.hover-button {
   cursor: pointer;
+  width: 50%;
+  height: 40px;
+  line-height: 38px;
+  text-align: center;
+  border-radius: 2px;
 }
+
+.hover-button:hover {
+  background-color: #43537f;
+}
+
+.play-button {}
 
 /****** D3 *********/
 
