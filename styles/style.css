@@ -53,6 +53,8 @@ table {
 * {
   box-sizing: border-box;
   font-family: "Inconsolata", sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 a {
@@ -69,7 +71,7 @@ body {
   background: linear-gradient(0deg, #232b42, #232b42);
   height: 100%;
   width: 100%;
-  color: #d8d8d8;
+  color: #9ba7c9;
 }
 
 .main-container {
@@ -91,7 +93,7 @@ body {
 /**** TTT BOARD ****/
 
 #board {
-  border: 1px solid red;
+  border: 1px solid #7987af;
   width: 302px;
   height: 302px;
   display: flex;
@@ -99,9 +101,13 @@ body {
 }
 
 .square {
-  border: 1px solid blue;
+  border: 1px solid #7987af;
+  color: #9ba7c9;
   height: 100px;
   width: 100px;
+  line-height: 86px;
+  font-size: 70px;
+  text-align: center;
 }
 
 /**** CONTROLS ****/
@@ -110,19 +116,20 @@ body {
   width: 200px;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   height: 500px;
   border: 1px solid red;
 }
 
 .scores-container {
-  border: 1px solid red;
   width: 200px;
-  height: 90px;
+  height: 60px;
 }
 
 .score {
-  border: 1px solid blue;
-  height: 25px;
+  height: 20px;
+  font-size: 16px;
+  padding: 2px 0 0 10px;
 }
 
 .score-1 {
@@ -155,15 +162,16 @@ body {
 /****** D3 *********/
 
 .axis-y line {
-  stroke: #eee;
+  stroke: #9ba7c9;
 }
 
 .axis-y path {
-  stroke: #eee;
+  stroke: #9ba7c9;
 }
 
 .axis-y text {
-  fill: #eee
+  fill: #9ba7c9
+  
 }
 
 .line {
