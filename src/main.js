@@ -3,7 +3,8 @@ const Game = require('./game.js');
 document.addEventListener("DOMContentLoaded", () => {
   const game = new Game();
   
-  game.newGame(3);
+  
+  // BUTTONS ====================
   
   const playButton = document.querySelector(".play-button");
   playButton.addEventListener("click", (e) => {
@@ -13,6 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
   stopButton.addEventListener("click", (e) => {
     game.stopGame();
   });
+  
+  // SLIDERS =====================
   
   const sliderWin1 = document.querySelector(".slider-win-1");
   const sliderWinVal1 = document.querySelector(".slider-win-value-1");
@@ -53,6 +56,8 @@ document.addEventListener("DOMContentLoaded", () => {
     [select1, sliderContainer1],
     [select2, sliderContainer2]
   ];
+  sliderContainer1.style.height = "100px";
+  sliderContainer1.setAttribute("height", "100px");
   selectArr.forEach((arr) => {
     arr[0].addEventListener("change", (e) => {
       if (arr[0].value === "ML") {

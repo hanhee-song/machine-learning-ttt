@@ -234,8 +234,7 @@ const drawGraph = require('./draw_graph.js');
 
 class Game {
   constructor() {
-    this.size = null;
-    this.board = null;
+    this.board = new Board(3);
     this.player1 = null;
     this.player2 = null;
     this.currentPlayer = this.player1;
@@ -248,60 +247,54 @@ class Game {
     this.running = false;
   }
   
-  newGame(size = 3, player1 = new MLPlayer(), player2 = new EasyPlayer()) {
-    this.size = size;
-    this.board = new Board(size);
+  startGame(player1 = new MLPlayer(), player2 = new EasyPlayer()) {
     this.player1 = player1;
-    this.player1.piece = "x";
     this.player2 = player2;
-    this.player2.piece = "o";
+    this.player1.setPiece("x");
+    this.player2.setPiece("o");
     this.currentPlayer = this.player1;
-    this._queueDraw();
-  }
-  
-  playGame() {
-    if (!this.running) {
-      this.startGame();
-    } else {
-      this.changePauseState();
-    }
-  }
-  
-  startGame() {
-    this.running = true;
-    this.paused = false;
-    this._takeTurn();
-    this.changeIcon();
-  }
-  
-  stopGame() {
-    this.running = false;
-    this.paused = true;
-    this.changeIcon();
     this.score1 = 0;
     this.score2 = 0;
     this.ties = 0;
     this.scoreboard = [];
     this.scoreRatios = [];
-    document.querySelector(".score-1").innerHTML = `Player 1: ${this.score1}`;
-    document.querySelector(".score-2").innerHTML = `Player 2: ${this.score2}`;
-    document.querySelector(".score-tie").innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;Ties: ${this.ties}`;
+    this.paused = false;
+    this.running = true;
+    
+    this._queueDraw();
+    this._takeTurn();
+    this._changeIcon();
+    this._refreshAllScores();
+  }
+  
+  playGame(player1, player2) {
+    if (!this.running) {
+      this.startGame(player1, player2);
+    } else {
+      this.changePauseState();
+    }
+  }
+  
+  stopGame() {
+    this.running = false;
+    this.paused = true;
+    this._changeIcon();
     setTimeout(() => {
-      
       this.board.resetGrid();
+      this._refreshAllScores();
     }, 0);
   }
   
   changePauseState() {
     this.paused = !this.paused;
-    this.changeIcon();
+    this._changeIcon();
     if (!this.paused && this.running) {
       this.board.resetGrid();
       this._takeTurn();
     }
   }
   
-  changeIcon() {
+  _changeIcon() {
     const icon = document.querySelector(".toggle-play-icon");
     if (this.paused) {
       icon.classList.add("fa-play");
@@ -310,6 +303,12 @@ class Game {
       icon.classList.remove("fa-play");
       icon.classList.add("fa-pause");
     }
+  }
+  
+  _refreshAllScores() {
+    document.querySelector(".score-1").innerHTML = `Player 1: ${this.score1}`;
+    document.querySelector(".score-2").innerHTML = `Player 2: ${this.score2}`;
+    document.querySelector(".score-tie").innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;Ties: ${this.ties}`;
   }
   
   _takeTurn() {
@@ -432,7 +431,8 @@ const Game = require('./game.js');
 document.addEventListener("DOMContentLoaded", () => {
   const game = new Game();
   
-  game.newGame(3);
+  
+  // BUTTONS ====================
   
   const playButton = document.querySelector(".play-button");
   playButton.addEventListener("click", (e) => {
@@ -442,6 +442,8 @@ document.addEventListener("DOMContentLoaded", () => {
   stopButton.addEventListener("click", (e) => {
     game.stopGame();
   });
+  
+  // SLIDERS =====================
   
   const sliderWin1 = document.querySelector(".slider-win-1");
   const sliderWinVal1 = document.querySelector(".slider-win-value-1");
@@ -482,6 +484,8 @@ document.addEventListener("DOMContentLoaded", () => {
     [select1, sliderContainer1],
     [select2, sliderContainer2]
   ];
+  sliderContainer1.style.height = "100px";
+  sliderContainer1.setAttribute("height", "100px");
   selectArr.forEach((arr) => {
     arr[0].addEventListener("change", (e) => {
       if (arr[0].value === "ML") {
@@ -499,6 +503,10 @@ document.addEventListener("DOMContentLoaded", () => {
 class Player {
   constructor(props) {
     this.piece = null;
+  }
+  
+  setPiece(piece) {
+    this.piece = piece;
   }
   
   makeMove(board) {

@@ -3,6 +3,10 @@ class Player {
     this.piece = null;
   }
   
+  setPiece(piece) {
+    this.piece = piece;
+  }
+  
   makeMove(board) {
     
   }
