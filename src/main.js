@@ -4,11 +4,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const game = new Game();
   
   game.newGame(3);
-  game.startGame();
   
-  const pauseButton = document.querySelector(".pause-button");
-  pauseButton.addEventListener("click", (e) => {
-    game.changePauseState();
+  const playButton = document.querySelector(".play-button");
+  playButton.addEventListener("click", (e) => {
+    game.playGame();
+  });
+  
+  const startButton = document.querySelector(".start-button");
+  startButton.addEventListener("click", (e) => {
   });
   
 });

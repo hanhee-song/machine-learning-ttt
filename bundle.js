@@ -254,16 +254,37 @@ class Game {
     this.currentPlayer = this.player1;
   }
   
+  playGame() {
+    if (!this.running) {
+      this.startGame();
+    } else {
+      this.changePauseState();
+    }
+  }
+  
   startGame() {
     this._takeTurn();
     this.running = true;
+    this.changeIcon();
   }
   
   changePauseState() {
     this.paused = !this.paused;
+    this.changeIcon();
     if (!this.paused && this.running) {
       this.board.resetGrid();
       this._takeTurn();
+    }
+  }
+  
+  changeIcon() {
+    const icon = document.querySelector(".toggle-play-icon");
+    if (this.paused) {
+      icon.classList.add("fa-play");
+      icon.classList.remove("fa-pause");
+    } else {
+      icon.classList.remove("fa-play");
+      icon.classList.add("fa-pause");
     }
   }
   
@@ -384,11 +405,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const game = new Game();
   
   game.newGame(3);
-  game.startGame();
   
-  const pauseButton = document.querySelector(".pause-button");
-  pauseButton.addEventListener("click", (e) => {
-    game.changePauseState();
+  const playButton = document.querySelector(".play-button");
+  playButton.addEventListener("click", (e) => {
+    game.playGame();
+  });
+  
+  const startButton = document.querySelector(".start-button");
+  startButton.addEventListener("click", (e) => {
   });
   
 });

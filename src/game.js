@@ -32,16 +32,37 @@ class Game {
     this.currentPlayer = this.player1;
   }
   
+  playGame() {
+    if (!this.running) {
+      this.startGame();
+    } else {
+      this.changePauseState();
+    }
+  }
+  
   startGame() {
     this._takeTurn();
     this.running = true;
+    this.changeIcon();
   }
   
   changePauseState() {
     this.paused = !this.paused;
+    this.changeIcon();
     if (!this.paused && this.running) {
       this.board.resetGrid();
       this._takeTurn();
+    }
+  }
+  
+  changeIcon() {
+    const icon = document.querySelector(".toggle-play-icon");
+    if (this.paused) {
+      icon.classList.add("fa-play");
+      icon.classList.remove("fa-pause");
+    } else {
+      icon.classList.remove("fa-play");
+      icon.classList.add("fa-pause");
     }
   }
   

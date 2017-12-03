@@ -144,19 +144,16 @@ body {
   color: #e07f7f;
 }
 
-.pause-button {
-  border: 1px solid blue;
-  width: 50px;
-  height: 20px;
-  cursor: pointer;
-  margin: auto;
+.buttons-container {
+  width: 200px;
+  display: flex;
+  justify-content: space-around;
+  border: 1px solid red;
 }
 
-.pause-container {
-  border: 1px solid red;
-  width: 60px;
-  height: 30px;
-  margin: auto;
+.play-button {
+  border: 1px solid blue;
+  cursor: pointer;
 }
 
 /****** D3 *********/
