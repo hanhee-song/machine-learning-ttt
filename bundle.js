@@ -468,9 +468,6 @@ document.addEventListener("DOMContentLoaded", () => {
     arr[0].addEventListener("input", (e) => {
       arr[1].innerHTML = arr[0].value;
     });
-    // arr[0].addEventListener("mousemove", (e) => {
-    //   arr[1].innerHTML = arr[0].value;
-    // });
   });
   
   const select1 = document.querySelector(".select-1");
