@@ -14,8 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
     score2Div.innerHTML = `Player 2: ${score2}`;
     tiesDiv.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;Ties: ${ties}`;
   });
+  
+  const icon = document.querySelector(".toggle-play-icon");
   game.onPause((paused) => {
-    const icon = document.querySelector(".toggle-play-icon");
     if (paused) {
       icon.classList.add("fa-play");
       icon.classList.remove("fa-pause");
@@ -148,6 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
       input.disabled = true;
     });
   });
+  
   const stopButton = document.querySelector(".stop-button");
   stopButton.addEventListener("click", (e) => {
     game.stopGame();

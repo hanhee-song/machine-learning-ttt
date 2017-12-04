@@ -149,6 +149,7 @@ class MLPlayer extends Player {
     this.tieFactor = tie;
     this.loseFactor = lose;
     this.factorThreshold = 10;
+    this.factorCap = 50;
   }
   
   makeMove(board) {
@@ -163,20 +164,32 @@ class MLPlayer extends Player {
     } else {
       let totalWeight = 0;
       const weightArr = [];
+      let greatestMove;
+      let greatestMoveVal;
       positions.forEach((pos) => {
         const stringPos = JSON.stringify(pos);
         const score = this.memory[boardState][stringPos] || 0;
+        if (!greatestMoveVal || score > greatestMoveVal) {
+          greatestMove = pos;
+          greatestMoveVal = score;
+        }
         if (score > -this.factorThreshold) {
           totalWeight += this.factorThreshold + score;
         }
         weightArr.push(totalWeight);
       });
       
-      const rand = Math.floor(Math.random() * totalWeight);
-      for (var i = 0; i < weightArr.length; i++) {
-        if (rand <= weightArr[i]) {
-          move = positions[i];
-          break;
+      if (totalWeight === 0) {
+        // If no score has pos value, choose the greatest
+        move = greatestMove;
+      } else {
+        // Otherwise, pick a random one from the positives
+        const rand = Math.floor(Math.random() * totalWeight);
+        for (var i = 0; i < weightArr.length; i++) {
+          if (rand <= weightArr[i]) {
+            move = positions[i];
+            break;
+          }
         }
       }
       if (!move) {
@@ -185,7 +198,6 @@ class MLPlayer extends Player {
         // for your AI.
         debugger;
         move = this._findRandomMove(board);
-        // TODO: CHANGE THIS LOGIC TO PREFER THE GREATEST NEGATIVE VALUE
       }
     }
     
@@ -212,7 +224,7 @@ class MLPlayer extends Player {
       const move = arr[1];
       if (this.memory[board]) {
         if (this.memory[board][move]) {
-          this.memory[board][move] += val;
+          this.memory[board][move] = Math.min(this.memory[board][move] + val, this.factorCap);
         } else {
           this.memory[board][move] = val;
         }

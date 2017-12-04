@@ -48,7 +48,6 @@ class Game {
     this._queueDraw();
     this._takeTurn();
     this.pauseCallback(this.paused);
-    this._refreshAllScores();
     this.updateScoresCallback(this.score1, this.score2, this.ties);
   }
   
@@ -66,7 +65,6 @@ class Game {
     this.pauseCallback(this.paused);
     setTimeout(() => {
       this.board.resetGrid();
-      this._refreshAllScores();
       this.updateScoresCallback(this.score1, this.score2, this.ties);
     }, 0);
   }
