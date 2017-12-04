@@ -686,9 +686,7 @@ class EasyPlayer extends AIPlayer {
   makeMove(board) {
     let move;
     const otherPiece = this.piece === "x" ? "o" : "x";
-    move = this._findTwoInRow(board, this.piece) || this._findTwoInRow(board, otherPiece);
-    
-    move = move || this._findRandomMove(board);
+    move = this._findRandomMove(board);
     return this._promisifyMove(move);
   }
 }
