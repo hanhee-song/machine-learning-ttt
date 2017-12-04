@@ -64,6 +64,12 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // BUTTONS ====================
   
+  const inputs = [
+    sliderWin1, sliderTie1, sliderLose1,
+    sliderWin2, sliderTie2, sliderLose2,
+    select1, select2
+  ];
+  
   function parseOptions(options) {
     let player1;
     let player2;
@@ -93,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   
   const playButton = document.querySelector(".play-button");
+  
   playButton.addEventListener("click", (e) => {
     const options = {
       player1: {
@@ -114,10 +121,17 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     
     game.playGame(...parseOptions(options));
+    
+    inputs.forEach((input) => {
+      input.disabled = true;
+    });
   });
   const stopButton = document.querySelector(".stop-button");
   stopButton.addEventListener("click", (e) => {
     game.stopGame();
+    inputs.forEach((input) => {
+      input.disabled = false;
+    });
   });
 
 });
