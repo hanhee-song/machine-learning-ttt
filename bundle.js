@@ -3,6 +3,7 @@ class Board {
   constructor(size) {
     this.size = size;
     this.grid = undefined;
+    this.squares = [];
     this.drawInitialBoard();
     this.resetGrid(size);
   }
@@ -13,8 +14,7 @@ class Board {
       const row = [];
       for (var j = 0; j < this.size; j++) {
         row.push(" ");
-        const square = document.querySelector(`.s${i}${j}`);
-        square.innerHTML = "";
+        this.squares[i * 3 + j].innerHTML = "";
       }
       grid.push(row);
     }
@@ -31,6 +31,7 @@ class Board {
         square.style.width = `${Math.floor(length / this.size)}px`;
         square.style.height = `${Math.floor(length / this.size)}px`;
         board.append(square);
+        this.squares.push(square);
       }
     }
   }
@@ -94,11 +95,7 @@ class Board {
   }
   
   validPos(pos) {
-    return this.openPositions().map((arr) => {
-      return JSON.stringify(arr);
-    }).includes(JSON.stringify(pos));
-      // && pos[0] >= 0 && pos[0] < this.size
-      // && pos[1] >= 0 && pos[1] < this.size;
+    return this.getPiece(pos) === " ";
   }
   
   openPositions() {
