@@ -167,7 +167,7 @@ body {
 select {
   outline: 0;
   box-shadow: none;
-  border: 1px solid #7987af;
+  border: 0.0625rem solid #7987af;
   color: #a1abc6;
   cursor: pointer;
   transition: all .1s;
@@ -339,12 +339,12 @@ select:disabled {
 .play-button {}
 
 .slider-speed {
-  width: 100px;
-  margin: 1px 3px 0 5px;
+  width: 6.25rem;
+  margin: 0.0625rem 0.1875rem 0 0.3125rem;
 }
 
 .slider-speed-text, .slider-speed-value {
-  margin: 10px 0;
+  margin: 0.625rem 0;
 }
 
 /****** D3 *********/
@@ -366,7 +366,7 @@ svg {}
 
 .line {
   fill: none;
-  stroke-width: 1.0.3125rem;
+  stroke-width: 0.0625rem;
 }
 
 .area {
