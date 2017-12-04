@@ -454,6 +454,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const sliderTieVal2 = document.querySelector(".slider-tie-value-2");
   const sliderLose2 = document.querySelector(".slider-lose-2");
   const sliderLoseVal2 = document.querySelector(".slider-lose-value-2");
+  const sliderSpeed = document.querySelector(".slider-speed");
+  const sliderSpeedVal = document.querySelector(".slider-speed-value");
   
   const sliders = [
     [sliderWin1, sliderWinVal1],
@@ -461,7 +463,8 @@ document.addEventListener("DOMContentLoaded", () => {
     [sliderLose1, sliderLoseVal1],
     [sliderWin2, sliderWinVal2],
     [sliderTie2, sliderTieVal2],
-    [sliderLose2, sliderLoseVal2]
+    [sliderLose2, sliderLoseVal2],
+    [sliderSpeed, sliderSpeedVal]
   ];
   
   sliders.forEach((arr) => {

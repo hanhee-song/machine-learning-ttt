@@ -266,7 +266,7 @@ select:disabled {
   height: 0.5rem;
   cursor: pointer;
   background: #7987af;
-  border-radius: 1.0.1875rem;
+  border-radius: 0.1875rem;
 }
 .slider:focus::-webkit-slider-runnable-track {
 }
@@ -275,7 +275,7 @@ select:disabled {
   height: 0.5rem;
   cursor: pointer;
   background: #7987af;
-  border-radius: 1.0.1875rem;
+  border-radius: 0.1875rem;
 }
 .slider::-ms-track {
   width: 100%;
@@ -288,14 +288,14 @@ select:disabled {
 }
 .slider::-ms-fill-lower {
   background: #7987af;
-  border-radius: 2.0.375rem;
+  border-radius: 0.375rem;
 }
 .slider:focus::-ms-fill-lower {
   background: #7987af;
 }
 .slider::-ms-fill-upper {
   background: #7987af;
-  border-radius: 2.0.375rem;
+  border-radius: 0.375rem;
 }
 .slider:focus::-ms-fill-upper {
 }
@@ -312,8 +312,14 @@ select:disabled {
 .buttons-container {
   width: 12.5rem;
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   border-bottom: 0.0625rem solid #7987af;
+}
+
+.buttons-row {
+  display: flex;
+  justify-content: center;
 }
 
 .hover-button {
@@ -322,7 +328,6 @@ select:disabled {
   height: 2.5rem;
   line-height: 2.375rem;
   text-align: center;
-  border-radius: 0.125rem;
   transition: background-color .2s;
   -webkit-transition: background-color .2s;
 }
@@ -332,6 +337,15 @@ select:disabled {
 }
 
 .play-button {}
+
+.slider-speed {
+  width: 150px;
+  margin: 10px 0;
+}
+
+.slider-speed-value {
+  margin: 10px 0;
+}
 
 /****** D3 *********/
 
