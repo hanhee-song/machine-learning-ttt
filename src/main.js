@@ -5,10 +5,13 @@ const EasyPlayer = Players.EasyPlayer;
 const MediumPlayer = Players.MediumPlayer;
 
 document.addEventListener("DOMContentLoaded", () => {
+  
+  // INITIALIZE GAME ==============
   const game = new Game();
   const score1Div = document.querySelector(".score-1");
   const score2Div = document.querySelector(".score-2");
   const tiesDiv = document.querySelector(".score-tie");
+  
   game.onUpdateScores((score1, score2, ties) => {
     score1Div.innerHTML = `Player 1: ${score1}`;
     score2Div.innerHTML = `Player 2: ${score2}`;
@@ -157,5 +160,4 @@ document.addEventListener("DOMContentLoaded", () => {
       input.disabled = false;
     });
   });
-
 });

@@ -182,10 +182,10 @@ class Game {
         player2: this.recentScore2 / runs,
         ties: this.recentTies / runs,
       });
-    }
-    
-    if (this.scoreRatios.length > 100) {
-      this.scoreRatios.shift();
+      if (this.scoreRatios.length > 100) {
+        this.scoreRatios.shift();
+      }
+      drawGraph(this.scoreRatios);
     }
   }
   

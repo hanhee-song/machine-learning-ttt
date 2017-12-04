@@ -404,10 +404,10 @@ class Game {
         player2: this.recentScore2 / runs,
         ties: this.recentTies / runs,
       });
-    }
-    
-    if (this.scoreRatios.length > 100) {
-      this.scoreRatios.shift();
+      if (this.scoreRatios.length > 100) {
+        this.scoreRatios.shift();
+      }
+      drawGraph(this.scoreRatios);
     }
   }
   
@@ -431,10 +431,13 @@ const EasyPlayer = Players.EasyPlayer;
 const MediumPlayer = Players.MediumPlayer;
 
 document.addEventListener("DOMContentLoaded", () => {
+  
+  // INITIALIZE GAME ==============
   const game = new Game();
   const score1Div = document.querySelector(".score-1");
   const score2Div = document.querySelector(".score-2");
   const tiesDiv = document.querySelector(".score-tie");
+  
   game.onUpdateScores((score1, score2, ties) => {
     score1Div.innerHTML = `Player 1: ${score1}`;
     score2Div.innerHTML = `Player 2: ${score2}`;
@@ -583,7 +586,6 @@ document.addEventListener("DOMContentLoaded", () => {
       input.disabled = false;
     });
   });
-
 });
 
 },{"./game.js":3,"./player.js":5}],5:[function(require,module,exports){
