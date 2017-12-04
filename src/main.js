@@ -40,6 +40,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
   
+  sliderSpeed.addEventListener("input", (e) => {
+    game.updateSpeed(sliderSpeed.value);
+  });
+  
   const select1 = document.querySelector(".select-1");
   const sliderContainer1 = document.querySelector(".sliders-container-1");
   const select2 = document.querySelector(".select-2");

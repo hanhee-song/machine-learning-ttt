@@ -339,11 +339,11 @@ select:disabled {
 .play-button {}
 
 .slider-speed {
-  width: 150px;
-  margin: 10px 0;
+  width: 100px;
+  margin: 1px 3px 0 5px;
 }
 
-.slider-speed-value {
+.slider-speed-text, .slider-speed-value {
   margin: 10px 0;
 }
 

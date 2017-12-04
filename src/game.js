@@ -20,6 +20,7 @@ class Game {
     this.paused = true;
     this.running = false;
     this._drawGraph();
+    this.interval = 0;
   }
   
   startGame(player1 = new MLPlayer(), player2 = new EasyPlayer()) {
@@ -69,6 +70,22 @@ class Game {
     }
   }
   
+  updateSpeed(val) {
+    const intervals = {
+      10: 0,
+      9: 20,
+      8: 40,
+      7: 70,
+      6: 100,
+      5: 150,
+      4: 300,
+      3: 500,
+      2: 700,
+      1: 1000
+    };
+    this.interval = intervals[val];
+  }
+  
   _changeIcon() {
     const icon = document.querySelector(".toggle-play-icon");
     if (this.paused) {
@@ -87,7 +104,7 @@ class Game {
   }
   
   _takeTurn() {
-    if (!this.running) {
+    if (!this.running || this.paused) {
       return;
     }
     const winner = this.board.winner();
@@ -97,9 +114,6 @@ class Game {
       this.player1.receiveGameEnd(winner);
       this.player2.receiveGameEnd(winner);
       this._drawGraph();
-      if (this.paused) {
-        return;
-      }
       this.board.resetGrid();
     }
     this.currentPlayer.makeMove(this.board)
@@ -109,7 +123,9 @@ class Game {
             if (this.running) {
               this.board.setPiece(pos, this.currentPlayer.piece);
               this._switchPlayers();
-              this._takeTurn();
+              setTimeout(() => {
+                this._takeTurn();
+              }, this.interval);
             }
           } else {
             debugger;
