@@ -57,7 +57,7 @@ class Board {
     const diag2 = new Set();
     for (var i = 0; i < this.size; i++) {
       diag1.add(this.grid[i][i]);
-      diag2.add(this.grid[i][this.size - i]);
+      diag2.add(this.grid[i][this.size - i - 1]);
     }
     if (diag1.size === 1 && !diag1.has(" ")) {
       return diag1.values().next().value;
