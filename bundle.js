@@ -127,11 +127,11 @@ function drawGraph(data) {
   const svg = d3.select("svg");
   svg.selectAll("g").remove();
   
-  const margin = {top: 20, right: 20, bottom: 30, left: 80},
-    width = Number(svg.attr("width")) - margin.left - margin.right,
+  const margin = {top: 20, right: 0, bottom: 20, left: 40},
+    width = 400,
     height = Number(svg.attr("height")) - margin.top - margin.bottom,
     g = svg.append("g").attr("transform", "translate(" + 40 + "," + margin.top + ")");
-  
+  console.log(width);
   const x = d3.scaleBand()
     .rangeRound([0, width]);
   const y = d3.scaleLinear()
@@ -481,13 +481,13 @@ document.addEventListener("DOMContentLoaded", () => {
     [select1, sliderContainer1],
     [select2, sliderContainer2]
   ];
-  sliderContainer1.style.height = "100px";
-  sliderContainer1.setAttribute("height", "100px");
+  sliderContainer1.style.height = "80px";
+  sliderContainer1.setAttribute("height", "80px");
   selectArr.forEach((arr) => {
     arr[0].addEventListener("change", (e) => {
       if (arr[0].value === "ML") {
-        arr[1].style.height = "100px";
-        arr[1].setAttribute("height", "100px");
+        arr[1].style.height = "80px";
+        arr[1].setAttribute("height", "80px");
       } else {
         arr[1].style.height = "0";
         arr[1].setAttribute("height", "0");

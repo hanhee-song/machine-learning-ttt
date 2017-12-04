@@ -118,7 +118,6 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   height: 500px;
-  border-bottom: 1px solid red;
 }
 
 /**** SCORES ****/
@@ -158,6 +157,7 @@ body {
 
 .options {
   display: flex;
+  padding: 5px;
 }
 
 .option-name {}
@@ -195,7 +195,7 @@ body {
   width: 200px;
   display: flex;
   justify-content: space-around;
-  /*border: 1px solid red;*/
+  border-bottom: 1px solid #7987af;
 }
 
 .hover-button {
@@ -205,6 +205,8 @@ body {
   line-height: 38px;
   text-align: center;
   border-radius: 2px;
+  transition: background-color .2s;
+  -webkit-transition: background-color .2s;
 }
 
 .hover-button:hover {
@@ -214,6 +216,8 @@ body {
 .play-button {}
 
 /****** D3 *********/
+
+svg {}
 
 .axis-y line {
   stroke: #9ba7c9;

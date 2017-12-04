@@ -7,11 +7,11 @@ function drawGraph(data) {
   const svg = d3.select("svg");
   svg.selectAll("g").remove();
   
-  const margin = {top: 20, right: 20, bottom: 30, left: 80},
-    width = Number(svg.attr("width")) - margin.left - margin.right,
+  const margin = {top: 20, right: 0, bottom: 20, left: 40},
+    width = 400,
     height = Number(svg.attr("height")) - margin.top - margin.bottom,
     g = svg.append("g").attr("transform", "translate(" + 40 + "," + margin.top + ")");
-  
+  console.log(width);
   const x = d3.scaleBand()
     .rangeRound([0, width]);
   const y = d3.scaleLinear()
