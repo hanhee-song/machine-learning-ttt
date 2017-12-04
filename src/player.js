@@ -185,6 +185,7 @@ class MLPlayer extends Player {
         // for your AI.
         debugger;
         move = this._findRandomMove(board);
+        // TODO: CHANGE THIS LOGIC TO PREFER THE GREATEST NEGATIVE VALUE
       }
     }
     

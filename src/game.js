@@ -19,6 +19,7 @@ class Game {
     this.scoreRatios = [];
     this.paused = true;
     this.running = false;
+    this._drawGraph();
   }
   
   startGame(player1 = new MLPlayer(), player2 = new EasyPlayer()) {
@@ -182,6 +183,10 @@ class Game {
           break;
       }
     }
+    
+    runs = runs || 1;
+    // For the initial graph-drawing to not have
+    // score1 / runs => NaN
     
     this.scoreRatios.push({
       id: totalRuns,
