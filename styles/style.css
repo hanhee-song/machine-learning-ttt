@@ -336,9 +336,9 @@ svg {}
   opacity: .2;
 }
 
-.line1 { stroke: #7dd183; }
-.area1 { fill: #7dd183; }
+.line1 { stroke: #e07f7f; }
+.area1 { fill: #e07f7f; }
 .line2 { stroke: #b5d1ff; }
 .area2 { fill: #b5d1ff; }
-.line3 { stroke: #e07f7f; }
-.area3 { fill: #e07f7f; }
+.line3 { stroke: #7dd183; }
+.area3 { fill: #7dd183; }

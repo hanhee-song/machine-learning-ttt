@@ -140,24 +140,24 @@ function drawGraph(data) {
   const area1 = d3.area()
     .x(d => x(d.id))
     .y0(height)
-    .y1(d => y(d.player1));
+    .y1(d => y(d.player2));
     
   const line1 = d3.line()
     .x(d => x(d.id))
-    .y(d => y(d.player1));
+    .y(d => y(d.player2));
   
   const area2 = d3.area()
     .x(d => x(d.id))
-    .y0(d => y(d.player1))
-    .y1(d => y(d.ties + d.player1));
+    .y0(d => y(d.player2))
+    .y1(d => y(d.ties + d.player2));
     
   const line2 = d3.line()
     .x(d => x(d.id))
-    .y(d => y(d.ties + d.player1));
+    .y(d => y(d.ties + d.player2));
   
   const area3 = d3.area()
     .x(d => x(d.id))
-    .y0(d => y(d.ties + d.player1))
+    .y0(d => y(d.ties + d.player2))
     .y1(d => y(1));
     
   const line3 = d3.line()
