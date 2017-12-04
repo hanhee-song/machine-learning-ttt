@@ -72,7 +72,6 @@ class Game {
     this.paused = !this.paused;
     this.pauseCallback(this.paused);
     if (!this.paused && this.running) {
-      this.board.resetGrid();
       this._takeTurn();
     }
   }

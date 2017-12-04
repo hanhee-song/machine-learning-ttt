@@ -294,7 +294,6 @@ class Game {
     this.paused = !this.paused;
     this.pauseCallback(this.paused);
     if (!this.paused && this.running) {
-      this.board.resetGrid();
       this._takeTurn();
     }
   }
@@ -653,10 +652,10 @@ class AIPlayer extends Player {
         row.push(board.getPiece([i, j]));
         col.push(board.getPiece([j, i]));
       }
-      if (row.includes(this.piece) && row.includes(" ") && row.length === 2) {
+      if (row.count(piece) === 2 && row.includes(" ")) {
         move = [i, row.indexOf(" ")];
       }
-      if (col.includes(this.piece) && col.includes(" ") && col.length === 2) {
+      if (col.count(piece) === 2 && col.includes(" ")) {
         move = [col.indexOf(" "), i];
       }
     }
@@ -668,12 +667,13 @@ class AIPlayer extends Player {
       diag1.push(board.getPiece([i, i]));
       diag2.push(board.getPiece([i, board.size - i - 1]));
     }
-    if (diag1.includes(this.piece) && diag1.includes(" ") && diag1.length === 2) {
+    if (diag1.count(piece) === 2 && diag1.includes(" ")) {
       move = [diag1.indexOf(" "), diag1.indexOf(" ")];
     }
-    if (diag2.includes(this.piece) && diag2.includes(" ") && diag2.length === 2) {
+    if (diag2.count(piece) === 2 && diag2.includes(" ")) {
       move = [diag2.indexOf(" "), board.size - diag2.indexOf(" ") - 1];
     }
+    console.log(move);
     return move;
   }
 }
@@ -840,6 +840,14 @@ function shuffle(array) {
   }
   return array;
 }
+
+Array.prototype.count = function(obj) {
+  let counter = 0;
+  for (var i = 0; i < this.length; i++) {
+    if (this[i] === obj) counter++;
+  }
+  return counter;
+};
 
 module.exports = { RandomPlayer, MLPlayer, EasyPlayer, MediumPlayer };
 
