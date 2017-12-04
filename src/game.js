@@ -22,7 +22,7 @@ class Game {
     this.scoreRatios = [];
     this.paused = true;
     this.running = false;
-    this._drawGraph();
+    drawGraph(this.scoreRatios);
     this.interval = 0;
     this.updateScoresCallback = () => {};
     this.pauseCallback = () => {};
@@ -45,7 +45,6 @@ class Game {
     this.paused = false;
     this.running = true;
     
-    this._queueDraw();
     this._takeTurn();
     this.pauseCallback(this.paused);
     this.updateScoresCallback(this.score1, this.score2, this.ties);
@@ -112,7 +111,7 @@ class Game {
       this.scoreboard.push(winner);
       this.player1.receiveGameEnd(winner);
       this.player2.receiveGameEnd(winner);
-      this._drawGraph();
+      drawGraph(this.scoreRatios);
       this.board.resetGrid();
     }
     this.currentPlayer.makeMove(this.board)
@@ -122,9 +121,13 @@ class Game {
             if (this.running) {
               this.board.setPiece(pos, this.currentPlayer.piece);
               this._switchPlayers();
-              setTimeout(() => {
+              if (this.interval) {
+                setTimeout(() => {
+                  this._takeTurn();
+                }, this.interval);
+              } else {
                 this._takeTurn();
-              }, this.interval);
+              }
             }
           } else {
             debugger;
@@ -167,18 +170,21 @@ class Game {
     }
     
     const totalRuns = this.score1 + this.score2 + this.ties;
-    let runs = this.recentScore1 + this.recentScore2 + this.recentTies;
-    runs = runs || 1;
-    // For the initial graph-drawing to not have
-    // score1 / runs => NaN
+    if (totalRuns % 2 === 0) {
+      let runs = this.recentScore1 + this.recentScore2 + this.recentTies;
+      runs = runs || 1;
+      // For the initial graph-drawing to not have
+      // score1 / runs => NaN
+      
+      this.scoreRatios.push({
+        id: totalRuns,
+        player1: this.recentScore1 / runs,
+        player2: this.recentScore2 / runs,
+        ties: this.recentTies / runs,
+      });
+    }
     
-    this.scoreRatios.push({
-      id: totalRuns,
-      player1: this.recentScore1 / runs,
-      player2: this.recentScore2 / runs,
-      ties: this.recentTies / runs,
-    });
-    if (this.scoreRatios.length > 200) {
+    if (this.scoreRatios.length > 100) {
       this.scoreRatios.shift();
     }
   }
@@ -190,22 +196,6 @@ class Game {
     } else {
       this.currentPlayer = this.player1;
     }
-  }
-  
-  // D3 MAGIC HAPPENS HERE ============
-  
-  _queueDraw() {
-    if (!this.drawing) {
-      this.drawing = true;
-      setTimeout(() => {
-        this.drawing = false;
-        drawGraph(this.scoreRatios);
-      }, 40);
-    }
-  }
-  
-  _drawGraph() {
-    this._queueDraw();
   }
 }
 

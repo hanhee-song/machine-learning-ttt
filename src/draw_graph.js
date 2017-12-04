@@ -1,6 +1,6 @@
 const ORDERED_ARR = [];
-for (var i = 0; i < 200; i++) {
-  ORDERED_ARR.push(i);
+for (var i = 0; i < 100; i++) {
+  ORDERED_ARR.push(i * 2);
 }
 
 function drawGraph(data) {
@@ -44,7 +44,7 @@ function drawGraph(data) {
     .y(d => y(1));
   
   let xArr;
-  if (data.length < 200) {
+  if (data.length < 100) {
     xArr = ORDERED_ARR;
   } else {
     xArr = data.map(d => d.id);
