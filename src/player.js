@@ -62,10 +62,10 @@ class AIPlayer extends Player {
         row.push(board.getPiece([i, j]));
         col.push(board.getPiece([j, i]));
       }
-      if (row.includes(this.piece) && row.includes(" ")) {
+      if (row.includes(this.piece) && row.includes(" ") && row.length === 2) {
         move = [i, row.indexOf(" ")];
       }
-      if (col.includes(this.piece) && col.includes(" ")) {
+      if (col.includes(this.piece) && col.includes(" ") && col.length === 2) {
         move = [col.indexOf(" "), i];
       }
     }
@@ -75,13 +75,13 @@ class AIPlayer extends Player {
     const diag2 = [];
     for (var i = 0; i < board.size; i++) {
       diag1.push(board.getPiece([i, i]));
-      diag2.push(board.getPiece([i, board.size - i]));
+      diag2.push(board.getPiece([i, board.size - i - 1]));
     }
-    if (diag1.includes(this.piece) && diag1.includes(" ")) {
+    if (diag1.includes(this.piece) && diag1.includes(" ") && diag1.length === 2) {
       move = [diag1.indexOf(" "), diag1.indexOf(" ")];
     }
-    if (diag2.includes(this.piece) && diag2.includes(" ")) {
-      move = [diag2.indexOf(" "), board.size - diag2.indexOf(" ")];
+    if (diag2.includes(this.piece) && diag2.includes(" ") && diag2.length === 2) {
+      move = [diag2.indexOf(" "), board.size - diag2.indexOf(" ") - 1];
     }
     return move;
   }
@@ -139,7 +139,7 @@ class MediumPlayer extends AIPlayer {
 // MACHINE LEARNING PLAYER ==========================
 
 class MLPlayer extends Player {
-  constructor(win, tie, lose) {
+  constructor(win = 1, tie = 0, lose = -5) {
     super();
     this.currentGameMemory = [];
     this.memory = {};
