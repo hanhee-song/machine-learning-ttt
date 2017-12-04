@@ -131,7 +131,6 @@ function drawGraph(data) {
     width = 400,
     height = Number(svg.attr("height")) - margin.top - margin.bottom,
     g = svg.append("g").attr("transform", "translate(" + 40 + "," + margin.top + ")");
-  console.log(width);
   const x = d3.scaleBand()
     .rangeRound([0, width]);
   const y = d3.scaleLinear()
@@ -241,6 +240,9 @@ class Game {
     this.score1 = 0;
     this.score2 = 0;
     this.ties = 0;
+    this.recentScore1 = 0;
+    this.recentScore2 = 0;
+    this.recentTies = 0;
     this.scoreboard = [];
     this.scoreRatios = [];
     this.paused = true;
@@ -258,6 +260,9 @@ class Game {
     this.score1 = 0;
     this.score2 = 0;
     this.ties = 0;
+    this.recentScore1 = 0;
+    this.recentScore2 = 0;
+    this.recentTies = 0;
     this.scoreboard = [];
     this.scoreRatios = [];
     this.paused = false;
@@ -363,20 +368,51 @@ class Game {
   }
   
   _updateScore(winner) {
-    // this.scoreboard.push(winner);
     switch (winner) {
       case "x":
         this.score1++;
+        this.recentScore1++;
         document.querySelector(".score-1").innerHTML = `Player 1: ${this.score1}`;
         break;
       case "o":
         this.score2++;
+        this.recentScore2++;
         document.querySelector(".score-2").innerHTML = `Player 2: ${this.score2}`;
         break;
       case "t":
         this.ties++;
+        this.recentTies++;
         document.querySelector(".score-tie").innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;Ties: ${this.ties}`;
         break;
+    }
+    if (this.recentTies + this.recentScore1 + this.recentScore2 > 200) {
+      switch (this.scoreboard[this.scoreboard.length - 201]) {
+        case "x":
+          this.recentScore1--;
+          break;
+        case "o":
+          this.recentScore2--;
+          break;
+        case "t":
+          this.recentTies--;
+          break;
+      }
+    }
+    
+    const totalRuns = this.score1 + this.score2 + this.ties;
+    let runs = this.recentScore1 + this.recentScore2 + this.recentTies;
+    runs = runs || 1;
+    // For the initial graph-drawing to not have
+    // score1 / runs => NaN
+    
+    this.scoreRatios.push({
+      id: totalRuns,
+      player1: this.recentScore1 / runs,
+      player2: this.recentScore2 / runs,
+      ties: this.recentTies / runs,
+    });
+    if (this.scoreRatios.length > 200) {
+      this.scoreRatios.shift();
     }
   }
   
@@ -402,44 +438,6 @@ class Game {
   }
   
   _drawGraph() {
-    const totalRuns = this.score1 + this.score2 + this.ties;
-    
-    // TODO: Lots of room for optimizations here!
-    
-    let score1 = 0;
-    let score2 = 0;
-    let ties = 0;
-    let runs = 0;
-    
-    for (var i = Math.max(0, this.scoreboard.length - 200); i < this.scoreboard.length; i++) {
-      runs++;
-      switch (this.scoreboard[i]) {
-        case this.player1.piece:
-          score1++;
-          break;
-        case this.player2.piece:
-          score2++;
-          break;
-        case "t":
-          ties++;
-          break;
-      }
-    }
-    
-    runs = runs || 1;
-    // For the initial graph-drawing to not have
-    // score1 / runs => NaN
-    
-    this.scoreRatios.push({
-      id: totalRuns,
-      player1: score1 / runs,
-      player2: score2 / runs,
-      ties: ties / runs,
-    });
-    if (this.scoreRatios.length > 200) {
-      this.scoreRatios.shift();
-    }
-    
     this._queueDraw();
   }
 }

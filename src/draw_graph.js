@@ -11,7 +11,6 @@ function drawGraph(data) {
     width = 400,
     height = Number(svg.attr("height")) - margin.top - margin.bottom,
     g = svg.append("g").attr("transform", "translate(" + 40 + "," + margin.top + ")");
-  console.log(width);
   const x = d3.scaleBand()
     .rangeRound([0, width]);
   const y = d3.scaleLinear()
