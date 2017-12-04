@@ -432,21 +432,13 @@ module.exports = Game;
 
 },{"./board.js":1,"./draw_graph.js":2,"./player.js":5}],4:[function(require,module,exports){
 const Game = require('./game.js');
+const Players = require('./player.js');
+const MLPlayer = Players.MLPlayer;
+const EasyPlayer = Players.EasyPlayer;
+const MediumPlayer = Players.MediumPlayer;
 
 document.addEventListener("DOMContentLoaded", () => {
   const game = new Game();
-  
-  
-  // BUTTONS ====================
-  
-  const playButton = document.querySelector(".play-button");
-  playButton.addEventListener("click", (e) => {
-    game.playGame();
-  });
-  const stopButton = document.querySelector(".stop-button");
-  stopButton.addEventListener("click", (e) => {
-    game.stopGame();
-  });
   
   // SLIDERS =====================
   
@@ -502,11 +494,70 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+  
+  // BUTTONS ====================
+  
+  function parseOptions(options) {
+    let player1;
+    let player2;
+    switch (options.player1.type) {
+      case "Easy":
+      player1 = new EasyPlayer();
+      break;
+      case "Medium":
+      player1 = new MediumPlayer();
+      break;
+      case "ML":
+      player1 = new MLPlayer(options.player1.mods.win, options.player1.mods.tie, options.player1.mods.lose);
+      break;
+    }
+    switch (options.player2.type) {
+      case "Easy":
+      player2 = new EasyPlayer();
+      break;
+      case "Medium":
+      player2 = new MediumPlayer();
+      break;
+      case "ML":
+      player2 = new MLPlayer(options.player2.mods.win, options.player2.mods.tie, options.player2.mods.lose);
+      break;
+    }
+    return [player1, player2];
+  }
+  
+  const playButton = document.querySelector(".play-button");
+  playButton.addEventListener("click", (e) => {
+    const options = {
+      player1: {
+        type: select1.value,
+        mods: {
+          win: Number(sliderWin1.value),
+          tie: Number(sliderTie1.value),
+          lose: Number(sliderLose1.value)
+        }
+      },
+      player2: {
+        type: select2.value,
+        mods: {
+          win: Number(sliderWin2.value),
+          tie: Number(sliderTie2.value),
+          lose: Number(sliderLose2.value)
+        }
+      }
+    };
+    
+    game.playGame(...parseOptions(options));
+  });
+  const stopButton = document.querySelector(".stop-button");
+  stopButton.addEventListener("click", (e) => {
+    game.stopGame();
+  });
+
 });
 
-},{"./game.js":3}],5:[function(require,module,exports){
+},{"./game.js":3,"./player.js":5}],5:[function(require,module,exports){
 class Player {
-  constructor(props) {
+  constructor() {
     this.piece = null;
   }
   
@@ -543,8 +594,8 @@ class Player {
 }
 
 class RandomPlayer extends Player {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
   }
   
   makeMove(board) {
@@ -555,8 +606,8 @@ class RandomPlayer extends Player {
 // PRE-BUILD AI PLAYERS ==================================
 
 class AIPlayer extends Player {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
   }
   
   _findTwoInRow(board, piece) {
@@ -595,8 +646,8 @@ class AIPlayer extends Player {
 }
 
 class EasyPlayer extends AIPlayer {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
   }
   
   makeMove(board) {
@@ -608,10 +659,10 @@ class EasyPlayer extends AIPlayer {
     return this._promisifyMove(move);
   }
 }
-
+  
 class MediumPlayer extends AIPlayer {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
   }
   
   makeMove(board) {
@@ -646,15 +697,15 @@ class MediumPlayer extends AIPlayer {
 // MACHINE LEARNING PLAYER ==========================
 
 class MLPlayer extends Player {
-  constructor(props) {
-    super(props);
+  constructor(win, tie, lose) {
+    super();
     this.currentGameMemory = [];
     this.memory = {};
     
     // LEARNING FACTORS
-    this.winFactor = 1;
-    this.tieFactor = 0;
-    this.loseFactor = -5;
+    this.winFactor = win;
+    this.tieFactor = tie;
+    this.loseFactor = lose;
     this.factorThreshold = 10;
   }
   

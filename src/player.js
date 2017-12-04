@@ -1,5 +1,5 @@
 class Player {
-  constructor(props) {
+  constructor() {
     this.piece = null;
   }
   
@@ -36,8 +36,8 @@ class Player {
 }
 
 class RandomPlayer extends Player {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
   }
   
   makeMove(board) {
@@ -48,8 +48,8 @@ class RandomPlayer extends Player {
 // PRE-BUILD AI PLAYERS ==================================
 
 class AIPlayer extends Player {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
   }
   
   _findTwoInRow(board, piece) {
@@ -88,8 +88,8 @@ class AIPlayer extends Player {
 }
 
 class EasyPlayer extends AIPlayer {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
   }
   
   makeMove(board) {
@@ -101,10 +101,10 @@ class EasyPlayer extends AIPlayer {
     return this._promisifyMove(move);
   }
 }
-
+  
 class MediumPlayer extends AIPlayer {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
   }
   
   makeMove(board) {
@@ -139,15 +139,15 @@ class MediumPlayer extends AIPlayer {
 // MACHINE LEARNING PLAYER ==========================
 
 class MLPlayer extends Player {
-  constructor(props) {
-    super(props);
+  constructor(win, tie, lose) {
+    super();
     this.currentGameMemory = [];
     this.memory = {};
     
     // LEARNING FACTORS
-    this.winFactor = 1;
-    this.tieFactor = 0;
-    this.loseFactor = -5;
+    this.winFactor = win;
+    this.tieFactor = tie;
+    this.loseFactor = lose;
     this.factorThreshold = 10;
   }
   

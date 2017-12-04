@@ -1,19 +1,11 @@
 const Game = require('./game.js');
+const Players = require('./player.js');
+const MLPlayer = Players.MLPlayer;
+const EasyPlayer = Players.EasyPlayer;
+const MediumPlayer = Players.MediumPlayer;
 
 document.addEventListener("DOMContentLoaded", () => {
   const game = new Game();
-  
-  
-  // BUTTONS ====================
-  
-  const playButton = document.querySelector(".play-button");
-  playButton.addEventListener("click", (e) => {
-    game.playGame();
-  });
-  const stopButton = document.querySelector(".stop-button");
-  stopButton.addEventListener("click", (e) => {
-    game.stopGame();
-  });
   
   // SLIDERS =====================
   
@@ -69,4 +61,63 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+  
+  // BUTTONS ====================
+  
+  function parseOptions(options) {
+    let player1;
+    let player2;
+    switch (options.player1.type) {
+      case "Easy":
+      player1 = new EasyPlayer();
+      break;
+      case "Medium":
+      player1 = new MediumPlayer();
+      break;
+      case "ML":
+      player1 = new MLPlayer(options.player1.mods.win, options.player1.mods.tie, options.player1.mods.lose);
+      break;
+    }
+    switch (options.player2.type) {
+      case "Easy":
+      player2 = new EasyPlayer();
+      break;
+      case "Medium":
+      player2 = new MediumPlayer();
+      break;
+      case "ML":
+      player2 = new MLPlayer(options.player2.mods.win, options.player2.mods.tie, options.player2.mods.lose);
+      break;
+    }
+    return [player1, player2];
+  }
+  
+  const playButton = document.querySelector(".play-button");
+  playButton.addEventListener("click", (e) => {
+    const options = {
+      player1: {
+        type: select1.value,
+        mods: {
+          win: Number(sliderWin1.value),
+          tie: Number(sliderTie1.value),
+          lose: Number(sliderLose1.value)
+        }
+      },
+      player2: {
+        type: select2.value,
+        mods: {
+          win: Number(sliderWin2.value),
+          tie: Number(sliderTie2.value),
+          lose: Number(sliderLose2.value)
+        }
+      }
+    };
+    
+    game.playGame(...parseOptions(options));
+  });
+  const stopButton = document.querySelector(".stop-button");
+  stopButton.addEventListener("click", (e) => {
+    game.stopGame();
+  });
+
 });
