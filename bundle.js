@@ -249,6 +249,7 @@ class Game {
     this.running = false;
     this._drawGraph();
     this.interval = 0;
+    this.updateScoresCallback = () => {};
   }
   
   startGame(player1 = new MLPlayer(), player2 = new EasyPlayer()) {
@@ -272,6 +273,7 @@ class Game {
     this._takeTurn();
     this._changeIcon();
     this._refreshAllScores();
+    this.updateScoresCallback(this.score1, this.score2, this.ties);
   }
   
   playGame(player1, player2) {
@@ -289,6 +291,7 @@ class Game {
     setTimeout(() => {
       this.board.resetGrid();
       this._refreshAllScores();
+      this.updateScoresCallback(this.score1, this.score2, this.ties);
     }, 0);
   }
   
@@ -317,6 +320,10 @@ class Game {
     this.interval = intervals[val];
   }
   
+  onUpdateScores(call) {
+    this.updateScoresCallback = call;
+  }
+  
   _changeIcon() {
     const icon = document.querySelector(".toggle-play-icon");
     if (this.paused) {
@@ -326,12 +333,6 @@ class Game {
       icon.classList.remove("fa-play");
       icon.classList.add("fa-pause");
     }
-  }
-  
-  _refreshAllScores() {
-    document.querySelector(".score-1").innerHTML = `Player 1: ${this.score1}`;
-    document.querySelector(".score-2").innerHTML = `Player 2: ${this.score2}`;
-    document.querySelector(".score-tie").innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;Ties: ${this.ties}`;
   }
   
   _takeTurn() {
@@ -372,19 +373,18 @@ class Game {
       case "x":
         this.score1++;
         this.recentScore1++;
-        document.querySelector(".score-1").innerHTML = `Player 1: ${this.score1}`;
         break;
       case "o":
         this.score2++;
         this.recentScore2++;
-        document.querySelector(".score-2").innerHTML = `Player 2: ${this.score2}`;
         break;
       case "t":
         this.ties++;
         this.recentTies++;
-        document.querySelector(".score-tie").innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;Ties: ${this.ties}`;
         break;
     }
+    this.updateScoresCallback(this.score1, this.score2, this.ties);
+    
     if (this.recentTies + this.recentScore1 + this.recentScore2 > 200) {
       switch (this.scoreboard[this.scoreboard.length - 201]) {
         case "x":
@@ -453,7 +453,14 @@ const MediumPlayer = Players.MediumPlayer;
 
 document.addEventListener("DOMContentLoaded", () => {
   const game = new Game();
-  
+  const score1Div = document.querySelector(".score-1");
+  const score2Div = document.querySelector(".score-2");
+  const tiesDiv = document.querySelector(".score-tie");
+  game.onUpdateScores((score1, score2, ties) => {
+    score1Div.innerHTML = `Player 1: ${score1}`;
+    score2Div.innerHTML = `Player 2: ${score2}`;
+    tiesDiv.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;Ties: ${ties}`;
+  });
   // SLIDERS =====================
   
   const sliderWin1 = document.querySelector(".slider-win-1");
