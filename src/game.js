@@ -25,6 +25,7 @@ class Game {
     this._drawGraph();
     this.interval = 0;
     this.updateScoresCallback = () => {};
+    this.pauseCallback = () => {};
   }
   
   startGame(player1 = new MLPlayer(), player2 = new EasyPlayer()) {
@@ -46,7 +47,7 @@ class Game {
     
     this._queueDraw();
     this._takeTurn();
-    this._changeIcon();
+    this.pauseCallback(this.paused);
     this._refreshAllScores();
     this.updateScoresCallback(this.score1, this.score2, this.ties);
   }
@@ -62,7 +63,7 @@ class Game {
   stopGame() {
     this.running = false;
     this.paused = true;
-    this._changeIcon();
+    this.pauseCallback(this.paused);
     setTimeout(() => {
       this.board.resetGrid();
       this._refreshAllScores();
@@ -72,7 +73,7 @@ class Game {
   
   changePauseState() {
     this.paused = !this.paused;
-    this._changeIcon();
+    this.pauseCallback(this.paused);
     if (!this.paused && this.running) {
       this.board.resetGrid();
       this._takeTurn();
@@ -99,15 +100,8 @@ class Game {
     this.updateScoresCallback = call;
   }
   
-  _changeIcon() {
-    const icon = document.querySelector(".toggle-play-icon");
-    if (this.paused) {
-      icon.classList.add("fa-play");
-      icon.classList.remove("fa-pause");
-    } else {
-      icon.classList.remove("fa-play");
-      icon.classList.add("fa-pause");
-    }
+  onPause(call) {
+    this.pauseCallback = call;
   }
   
   _takeTurn() {

@@ -14,6 +14,17 @@ document.addEventListener("DOMContentLoaded", () => {
     score2Div.innerHTML = `Player 2: ${score2}`;
     tiesDiv.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;Ties: ${ties}`;
   });
+  game.onPause((paused) => {
+    const icon = document.querySelector(".toggle-play-icon");
+    if (paused) {
+      icon.classList.add("fa-play");
+      icon.classList.remove("fa-pause");
+    } else {
+      icon.classList.remove("fa-play");
+      icon.classList.add("fa-pause");
+    }
+  });
+  
   // SLIDERS =====================
   
   const sliderWin1 = document.querySelector(".slider-win-1");
