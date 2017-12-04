@@ -170,6 +170,8 @@ select {
   border: 1px solid #7987af;
   color: #a1abc6;
   cursor: pointer;
+  transition: all .1s;
+  -webkit-transition: all .1s;
 }
 
 .select {
@@ -179,6 +181,10 @@ select {
   height: 1.25rem;
   background: #232b42;
   overflow: hidden;
+}
+
+select:disabled {
+  opacity: .4;
 }
 
 /*************/
