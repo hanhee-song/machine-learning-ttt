@@ -74,10 +74,16 @@ body {
   color: #a1abc6;
 }
 
+.title {
+  font-size: 3em;
+  text-align: center;
+  margin-top: 2.5rem;
+  margin-bottom: 1.25rem;
+}
+
 .main-container {
   width: 62.625rem;
   margin: auto;
-  margin-top: 6.25rem;
   display: flex;
 }
 
@@ -94,8 +100,9 @@ body {
 
 #board {
   border: 0.0625rem solid #7987af;
-  width: 18.875rem;
-  height: 18.875rem;
+  width: 15.125rem;
+  height: 15.125rem;
+  margin-right: 2.5rem;
   display: flex;
   flex-wrap: wrap;
 }
@@ -103,10 +110,10 @@ body {
 .square {
   border: 0.0625rem solid #7987af;
   color: #9ba7c9;
-  height: 6.25rem;
-  width: 6.25rem;
-  line-height: 5.375rem;
-  font-size: 4.375rem;
+  height: 5rem;
+  width: 5rem;
+  line-height: 4.375rem;
+  font-size: 3.75rem;
   text-align: center;
 }
 
@@ -370,7 +377,7 @@ svg {}
 }
 
 .area {
-  opacity: .2;
+  opacity: .1;
 }
 
 .line1 { stroke: #7dd183; }

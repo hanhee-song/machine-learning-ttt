@@ -124,7 +124,7 @@ function drawGraph(data) {
   const svg = d3.select("svg");
   svg.selectAll("g").remove();
   
-  const margin = {top: 20, right: 0, bottom: 20, left: 40},
+  const margin = {top: 5, right: 0, bottom: 5, left: 40},
     width = 400,
     height = Number(svg.attr("height")) - margin.top - margin.bottom,
     g = svg.append("g").attr("transform", "translate(" + 40 + "," + margin.top + ")");
