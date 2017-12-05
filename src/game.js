@@ -3,6 +3,7 @@ const RandomPlayer = Players.RandomPlayer;
 const MLPlayer = Players.MLPlayer;
 const EasyPlayer = Players.EasyPlayer;
 const MediumPlayer = Players.MediumPlayer;
+const HardPlayer = Players.HardPlayer;
 const Board = require('./board.js');
 const drawGraph = require('./draw_graph.js');
 

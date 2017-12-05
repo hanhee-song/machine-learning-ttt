@@ -3,6 +3,7 @@ const Players = require('./player.js');
 const MLPlayer = Players.MLPlayer;
 const EasyPlayer = Players.EasyPlayer;
 const MediumPlayer = Players.MediumPlayer;
+const HardPlayer = Players.HardPlayer;
 
 document.addEventListener("DOMContentLoaded", () => {
   
@@ -106,6 +107,9 @@ document.addEventListener("DOMContentLoaded", () => {
       case "Medium":
       player1 = new MediumPlayer();
       break;
+      case "Perfect":
+      player1 = new HardPlayer();
+      break;
       case "ML":
       player1 = new MLPlayer(options.player1.mods.win, options.player1.mods.tie, options.player1.mods.lose);
       break;
@@ -116,6 +120,9 @@ document.addEventListener("DOMContentLoaded", () => {
       break;
       case "Medium":
       player2 = new MediumPlayer();
+      break;
+      case "Perfect":
+      player2 = new HardPlayer();
       break;
       case "ML":
       player2 = new MLPlayer(options.player2.mods.win, options.player2.mods.tie, options.player2.mods.lose);
