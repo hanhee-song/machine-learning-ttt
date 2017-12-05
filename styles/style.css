@@ -87,13 +87,13 @@ body {
   display: flex;
 }
 
-.left-pane {
+.right-pane {
   width: 31.375rem;
   display: flex;
 }
 
-.right-pane {
-  width: 31.25rem;
+.left-pane {
+  width: 28.125rem;
 }
 
 /**** TTT BOARD ****/
@@ -102,7 +102,6 @@ body {
   border: 0.0625rem solid #7987af;
   width: 15.125rem;
   height: 15.125rem;
-  margin-right: 2.5rem;
   display: flex;
   flex-wrap: wrap;
 }
@@ -124,6 +123,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  margin-left: .5rem;
+  margin-right: 2rem;
   height: 31.25rem;
 }
 
@@ -386,3 +387,42 @@ svg {}
 .area2 { fill: #b5d1ff; }
 .line3 { stroke: #e07f7f; }
 .area3 { fill: #e07f7f; }
+
+/****** FOOTER ******/
+
+.name {
+  font-family: 'Inconsolata', monospace;
+  padding-top: 20px;
+  font-size: 22px;
+  text-align: center;
+}
+
+.about-me {
+  width: 300px;
+  margin: auto;
+  margin-bottom: 50px;
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  color: #7987af;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+.about-me a {
+  display: flex;
+  font-family: 'Inconsolata', monospace;
+}
+
+.about-me .fa {
+  text-align: center;
+  min-width: 22px;
+}
+
+.about-me a:hover {
+  color: #9ba7c9;
+}
+
+.about-me a:hover .fa {
+  font-size: 19px;
+}

@@ -3,7 +3,7 @@ const Players = require('./player.js');
 const EasyPlayer = Players.EasyPlayer;
 const MediumPlayer = Players.MediumPlayer;
 const HardPlayer = Players.HardPlayer;
-const MLPlayer = require('./ml_player.js')
+const MLPlayer = require('./ml_player.js');
 
 document.addEventListener("DOMContentLoaded", () => {
   
