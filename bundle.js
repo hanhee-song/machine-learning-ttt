@@ -739,7 +739,6 @@ class AIPlayer extends Player {
   }
   
   _findTwoInRow(board, piece) {
-    let move;
     // rows & col
     for (var i = 0; i < board.size; i++) {
       const row = [];
@@ -749,10 +748,10 @@ class AIPlayer extends Player {
         col.push(board.getPiece([j, i]));
       }
       if (row.count(piece) === 2 && row.includes(" ")) {
-        move = [i, row.indexOf(" ")];
+        return [i, row.indexOf(" ")];
       }
       if (col.count(piece) === 2 && col.includes(" ")) {
-        move = [col.indexOf(" "), i];
+        return [col.indexOf(" "), i];
       }
     }
     
@@ -764,12 +763,11 @@ class AIPlayer extends Player {
       diag2.push(board.getPiece([i, board.size - i - 1]));
     }
     if (diag1.count(piece) === 2 && diag1.includes(" ")) {
-      move = [diag1.indexOf(" "), diag1.indexOf(" ")];
+      return [diag1.indexOf(" "), diag1.indexOf(" ")];
     }
     if (diag2.count(piece) === 2 && diag2.includes(" ")) {
-      move = [diag2.indexOf(" "), board.size - diag2.indexOf(" ") - 1];
+      return [diag2.indexOf(" "), board.size - diag2.indexOf(" ") - 1];
     }
-    return move;
   }
 }
 
