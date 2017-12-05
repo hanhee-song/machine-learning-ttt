@@ -83,7 +83,6 @@ class AIPlayer extends Player {
     if (diag2.count(piece) === 2 && diag2.includes(" ")) {
       move = [diag2.indexOf(" "), board.size - diag2.indexOf(" ") - 1];
     }
-    console.log(move);
     return move;
   }
 }
@@ -168,7 +167,7 @@ class MLPlayer extends Player {
       positions.forEach((pos) => {
         const stringPos = JSON.stringify(pos);
         const score = this.memory[boardState][stringPos] || 0;
-        if (!greatestMoveVal || score > greatestMoveVal) {
+        if (greatestMoveVal === undefined || score > greatestMoveVal) {
           greatestMove = pos;
           greatestMoveVal = score;
         }
@@ -185,7 +184,7 @@ class MLPlayer extends Player {
         // Otherwise, pick a random one from the positives
         const rand = Math.floor(Math.random() * totalWeight);
         for (var i = 0; i < weightArr.length; i++) {
-          if (rand <= weightArr[i]) {
+          if (rand < weightArr[i]) {
             move = positions[i];
             break;
           }

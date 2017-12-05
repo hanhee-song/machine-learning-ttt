@@ -74,8 +74,8 @@ document.addEventListener("DOMContentLoaded", () => {
     [select1, sliderContainer1],
     [select2, sliderContainer2]
   ];
-  sliderContainer1.style.height = "80px";
-  sliderContainer1.setAttribute("height", "80px");
+  sliderContainer2.style.height = "80px";
+  sliderContainer2.setAttribute("height", "80px");
   selectArr.forEach((arr) => {
     arr[0].addEventListener("change", (e) => {
       if (arr[0].value === "ML") {
