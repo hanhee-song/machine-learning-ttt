@@ -146,7 +146,7 @@ class MLPlayer extends Player {
     this.winFactor = win;
     this.tieFactor = tie;
     this.loseFactor = lose;
-    this.factorThreshold = 10;
+    this.factorThreshold = 0;
     this.factorCap = 50;
   }
   
