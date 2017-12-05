@@ -528,7 +528,7 @@ document.addEventListener("DOMContentLoaded", () => {
       case "Medium":
       player1 = new MediumPlayer();
       break;
-      case "Perfect":
+      case "Hard":
       player1 = new HardPlayer();
       break;
       case "ML":
@@ -542,7 +542,7 @@ document.addEventListener("DOMContentLoaded", () => {
       case "Medium":
       player2 = new MediumPlayer();
       break;
-      case "Perfect":
+      case "Hard":
       player2 = new HardPlayer();
       break;
       case "ML":
