@@ -199,11 +199,6 @@ function drawGraph(data) {
     .data([data])
     .attr("class", "line line1")
     .attr("d", line1);
-
-  // g.append("g")
-  //     .attr("transform", "translate(0," + height + ")")
-  //     .call(d3.axisBottom(x))
-  //     .ticks(10);
   
   g.append("g")
       .call(d3.axisLeft(y))
