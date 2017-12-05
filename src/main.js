@@ -1,9 +1,9 @@
 const Game = require('./game.js');
 const Players = require('./player.js');
-const MLPlayer = Players.MLPlayer;
 const EasyPlayer = Players.EasyPlayer;
 const MediumPlayer = Players.MediumPlayer;
 const HardPlayer = Players.HardPlayer;
+const MLPlayer = require('./ml_player.js')
 
 document.addEventListener("DOMContentLoaded", () => {
   

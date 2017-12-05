@@ -1,9 +1,8 @@
 const Players = require('./player.js');
-const RandomPlayer = Players.RandomPlayer;
-const MLPlayer = Players.MLPlayer;
 const EasyPlayer = Players.EasyPlayer;
 const MediumPlayer = Players.MediumPlayer;
 const HardPlayer = Players.HardPlayer;
+const MLPlayer = require('./ml_player.js')
 const Board = require('./board.js');
 const drawGraph = require('./draw_graph.js');
 
