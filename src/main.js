@@ -4,8 +4,10 @@ const EasyPlayer = Players.EasyPlayer;
 const MediumPlayer = Players.MediumPlayer;
 const HardPlayer = Players.HardPlayer;
 const MLPlayer = require('./ml_player.js');
+const initializeHelp = require('./help.js');
 
 document.addEventListener("DOMContentLoaded", () => {
+  initializeHelp();
   
   // INITIALIZE GAME ==============
   const game = new Game();

@@ -219,7 +219,7 @@ const Players = require('./player.js');
 const EasyPlayer = Players.EasyPlayer;
 const MediumPlayer = Players.MediumPlayer;
 const HardPlayer = Players.HardPlayer;
-const MLPlayer = require('./ml_player.js')
+const MLPlayer = require('./ml_player.js');
 const Board = require('./board.js');
 const drawGraph = require('./draw_graph.js');
 
@@ -417,15 +417,38 @@ class Game {
 
 module.exports = Game;
 
-},{"./board.js":1,"./draw_graph.js":2,"./ml_player.js":5,"./player.js":6}],4:[function(require,module,exports){
+},{"./board.js":1,"./draw_graph.js":2,"./ml_player.js":6,"./player.js":7}],4:[function(require,module,exports){
+function initializeHelp() {
+  const helpText = document.querySelector('.help-text');
+  
+  function clearHelp() {
+    helpText.innerHTML = "";
+  }
+  
+  const sliders = document.getElementsByClassName('sliders-container');
+  for (var i = 0; i < sliders.length; i++) {
+    sliders[i].addEventListener("mouseover", () => {
+      helpText.innerHTML = "asdf";
+    });
+    sliders[i].addEventListener("mouseout", () => {
+      clearHelp();
+    });
+  }
+}
+
+module.exports = initializeHelp;
+
+},{}],5:[function(require,module,exports){
 const Game = require('./game.js');
 const Players = require('./player.js');
 const EasyPlayer = Players.EasyPlayer;
 const MediumPlayer = Players.MediumPlayer;
 const HardPlayer = Players.HardPlayer;
 const MLPlayer = require('./ml_player.js');
+const initializeHelp = require('./help.js');
 
 document.addEventListener("DOMContentLoaded", () => {
+  initializeHelp();
   
   // INITIALIZE GAME ==============
   const game = new Game();
@@ -589,7 +612,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-},{"./game.js":3,"./ml_player.js":5,"./player.js":6}],5:[function(require,module,exports){
+},{"./game.js":3,"./help.js":4,"./ml_player.js":6,"./player.js":7}],6:[function(require,module,exports){
 const Players = require('./player.js');
 const Player = Players.Player;
 
@@ -693,7 +716,7 @@ class MLPlayer extends Player {
 
 module.exports = MLPlayer;
 
-},{"./player.js":6}],6:[function(require,module,exports){
+},{"./player.js":7}],7:[function(require,module,exports){
 class Player {
   constructor() {
     this.piece = null;
@@ -949,4 +972,4 @@ module.exports = {
   HardPlayer,
 };
 
-},{}]},{},[4]);
+},{}]},{},[5]);
