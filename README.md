@@ -1,10 +1,12 @@
 ## Machine-Learning TTT
 
+![sample image](https://github.com/hanhee-song/machine-learning-ttt/blob/master/docs/Screen%20Shot%202017-12-05%20at%2023.18.44.png?raw=true)
+
 [Live Site](https://hanhee-song.github.io/machine-learning-ttt/)
 
 This TTT AI is built on the basic principles of machine learning and combines dynamic programming with flexible OOP to create a highly customizable AI.
 
-#### How it learns
+### How it learns
 
 It starts off knowing nothing about the game except for two rules: it can only put its pieces in one of nine squares, and it can't put its piece on top of another.
 
@@ -59,7 +61,7 @@ As it makes moves, it learns over time to avoid move with a historically low val
 * If it sees at least one good move, it will explore by randomly choosing one, with a higher chance of picking the one with more success.
 * If all moves have negative values, it will regress and choose the safest move every time, even if the safest move is not necessarily the best. Regressive behavior can be observed by matching it against the Hard AI - it will lose roughly 100-400 times before learning to repeat a set of safe actions.
 
-#### Bonus
+### Bonus
 
 The Hard AI is not a perfect AI. When a ML AI with reward values of ```{ win: 5, tie: -1, lose: -1 }``` is matched against the hard AI, the ML AI will learn to aggressively exploit loopholes in the Hard AI's logic and achieve a win rate of ~30%.
 
