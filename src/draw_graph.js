@@ -5,7 +5,13 @@ for (var i = 0; i < 100; i++) {
 
 function drawGraph(data) {
   const svg = d3.select("svg");
+  
   svg.selectAll("g").remove();
+  // If you're seeing this comment, you're probably checking out my d3 code
+  // and wondering why I remove everything rather than doing the
+  // enter-update-exit cycle. I've found that simply removing and
+  // recreating everything is somehow significantly faster than the
+  // enter-update-exit cycle.
   
   const margin = {top: 5, right: 0, bottom: 5, left: 40},
     width = 400,
@@ -93,6 +99,8 @@ function drawGraph(data) {
       .attr("dy", "0.71em")
       .attr("text-anchor", "end")
       .text("Win Ratios");
+  
+  g.append("g");
 }
 
 module.exports = drawGraph;

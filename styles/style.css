@@ -120,11 +120,17 @@ body {
 
 .help-container {
   border: 1px solid red;
-  height: 240px;
+  height: 260px;
+  width: 240px;
 }
 
 .help-text {
   border: 1px solid blue;
+  margin: 25px 10px 0 10px;
+  font-size: 16px;
+  line-height: 22px;
+  text-align: center;
+  opacity: 1;
 }
 
 /**** CONTROLS ****/
