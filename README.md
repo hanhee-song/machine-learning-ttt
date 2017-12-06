@@ -23,7 +23,7 @@ makeMove(board) {
 }
 ```
 
-When the game ends, the AI is alerted to the result. It will calculate a value based on the result - for example, losing after 3 moves and having a loseFactor of -2 would cause it to associate the three moves with values of -2, -4, and -10, respectively.
+When the game ends, the AI is alerted to the result. It will calculate a value based on the result - for example, losing after 3 moves and having a loseFactor of -2 would cause it to associate the three moves with values of -2, -4, and -10, respectively. It will store these values into its brain.
 
 ```JavaScript
 this.currentGameMemory.forEach((arr, i) => {
@@ -42,17 +42,10 @@ class Brain {
   }
   
   add(board, move, val) {
-    if (this.memory[board]) {
-      if (this.memory[board][move]) {
-        this.memory[board][move] = Math.min(this.memory[board][move] + val, this.factorCap);
-      } else {
-        this.memory[board][move] = val;
-      }
-    } else {
-      this.memory[board] = { [move]: val };
-    }
+    // ...
+    this.memory[board][move] = Math.min(this.memory[board][move] + val, this.factorCap);
+    // ...
   }
-  
   //...
 }
 ```
