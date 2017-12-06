@@ -12,26 +12,31 @@ class MLPlayer extends Player {
     this.tieFactor = tie;
     this.loseFactor = lose;
     this.factorThreshold = 0;
-    this.factorCap = 50;
+    
+    this.brain = new Brain();
   }
   
   makeMove(board) {
     // Machine learning happens here
-    const boardState = JSON.stringify(board.grid);
+    const boardStr = JSON.stringify(board.grid);
     let move;
     
     const positions = board.openPositions();
     
-    if (!this.memory[boardState]) {
+    if (!this.brain.has(boardStr)) {
       move = this._findRandomMove(board);
     } else {
+      // Build up probability array
       let totalWeight = 0;
       const weightArr = [];
+      // If all moves have <=0 weight, take the move with
+      // the greatest val
       let greatestMove;
       let greatestMoveVal;
+      
       positions.forEach((pos) => {
         const stringPos = JSON.stringify(pos);
-        const score = this.memory[boardState][stringPos] || 0;
+        const score = this.brain.score(boardStr, stringPos);
         if (greatestMoveVal === undefined || score > greatestMoveVal) {
           greatestMove = pos;
           greatestMoveVal = score;
@@ -42,11 +47,11 @@ class MLPlayer extends Player {
         weightArr.push(totalWeight);
       });
       
+      // If no score has pos value, choose the greatest
+      // Otherwise, pick a random one from the positives
       if (totalWeight === 0) {
-        // If no score has pos value, choose the greatest
         move = greatestMove;
       } else {
-        // Otherwise, pick a random one from the positives
         const rand = Math.floor(Math.random() * totalWeight);
         for (var i = 0; i < weightArr.length; i++) {
           if (rand < weightArr[i]) {
@@ -55,17 +60,14 @@ class MLPlayer extends Player {
           }
         }
       }
+      
       if (!move) {
-        // You hit this because your AI didn't find any favorable moves.
-        // Your AI needs to rethink. Or maybe you need to rethink
-        // for your AI.
-        debugger;
         move = this._findRandomMove(board);
       }
     }
     
     const moveState = JSON.stringify(move);
-    this.currentGameMemory.push([boardState, moveState]);
+    this.currentGameMemory.push([boardStr, moveState]);
     return this._promisifyMove(move);
   }
   
@@ -85,17 +87,36 @@ class MLPlayer extends Player {
       }
       const board = arr[0];
       const move = arr[1];
-      if (this.memory[board]) {
-        if (this.memory[board][move]) {
-          this.memory[board][move] = Math.min(this.memory[board][move] + val, this.factorCap);
-        } else {
-          this.memory[board][move] = val;
-        }
-      } else {
-        this.memory[board] = { [move]: val };
-      }
+      this.brain.add(board, move, val);
     });
     this.currentGameMemory = [];
+  }
+}
+
+class Brain {
+  constructor() {
+    this.memory = {};
+    this.factorCap = 50;
+  }
+  
+  has(board) {
+    return Boolean(this.memory[board]);
+  }
+  
+  add(board, move, val) {
+    if (this.memory[board]) {
+      if (this.memory[board][move]) {
+        this.memory[board][move] = Math.min(this.memory[board][move] + val, this.factorCap);
+      } else {
+        this.memory[board][move] = val;
+      }
+    } else {
+      this.memory[board] = { [move]: val };
+    }
+  }
+  
+  score(board, move) {
+    return this.memory[board][move] || 0;
   }
 }
 

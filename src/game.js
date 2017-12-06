@@ -116,22 +116,16 @@ class Game {
     this.currentPlayer.makeMove(this.board)
       .then(
         pos => {
-          if (this.board.validPos(pos)) {
-            if (this.running) {
-              this.board.setPiece(pos, this.currentPlayer.piece);
-              this._switchPlayers();
-              if (this.interval) {
-                setTimeout(() => {
-                  this._takeTurn();
-                }, this.interval);
-              } else {
+          if (this.running) {
+            this.board.setPiece(pos, this.currentPlayer.piece);
+            this._switchPlayers();
+            if (this.interval) {
+              setTimeout(() => {
                 this._takeTurn();
-              }
+              }, this.interval);
+            } else {
+              this._takeTurn();
             }
-          } else {
-            debugger;
-            // You hit this debugger because your AI made some
-            // poor decisions that it should rethink.
           }
         }
       );
