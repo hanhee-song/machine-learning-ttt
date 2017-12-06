@@ -119,14 +119,14 @@ body {
 /**** HELP ****/
 
 .help-container {
-  height: 260px;
-  width: 240px;
+  height: 16.25rem;
+  width: 15rem;
 }
 
 .help-text {
-  margin-top: 25px;
-  font-size: 16px;
-  line-height: 22px;
+  margin-top: 1.5625rem;
+  font-size: 1rem;
+  line-height: 1.375rem;
   text-align: center;
   opacity: 1;
   transition: all .08s;
@@ -414,32 +414,29 @@ svg {}
 /****** FOOTER ******/
 
 .name {
-  font-family: 'Inconsolata', monospace;
-  padding-top: 20px;
-  font-size: 22px;
+  font-size: 1.375rem;
   text-align: center;
 }
 
 .about-me {
-  width: 300px;
+  width: 18.75rem;
   margin: auto;
-  margin-bottom: 50px;
-  padding-top: 10px;
+  margin-bottom: 3.125rem;
+  padding-top: 0.625rem;
   display: flex;
   justify-content: space-between;
   color: #7987af;
-  font-size: 18px;
-  line-height: 20px;
+  font-size: 1.125rem;
+  line-height: 1.25rem;
 }
 
 .about-me a {
   display: flex;
-  font-family: 'Inconsolata', monospace;
 }
 
 .about-me .fa {
   text-align: center;
-  min-width: 22px;
+  min-width: 1.375rem;
 }
 
 .about-me a:hover {
@@ -447,5 +444,5 @@ svg {}
 }
 
 .about-me a:hover .fa {
-  font-size: 19px;
+  font-size: 1.1875rem;
 }
