@@ -50,7 +50,7 @@ class Brain {
 }
 ```
 
-As it makes moves, it learns over time to avoid move with a historically low value and prefer moves with a high value.
+As it makes moves, it learns over time to avoid moves with a historically low value and prefer moves with a high value.
 * If it sees at least one good move, it will explore by randomly choosing one, with a higher chance of picking the one with more success.
 * If all moves have negative values, it will regress and choose the safest move every time, even if the safest move is not necessarily the best. Regressive behavior can be observed by matching it against the Hard AI - it will lose roughly 100-400 times before learning to repeat a set of safe actions.
 
