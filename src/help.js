@@ -1,14 +1,10 @@
 function initializeHelp() {
   const helpText = document.querySelector('.help-text');
   
-  // function clearHelp() {
-  //   helpText.innerHTML = "";
-  // }
-  
   let fadeTimeout = null;
   
   function addText(text) {
-    for (var i = 0; i < this.length; i++) {
+    for (let i = 0; i < this.length; i++) {
       this[i].addEventListener("mouseenter", () => {
         helpText.innerHTML = text;
         helpText.classList.remove("fadeout");
@@ -46,15 +42,6 @@ function initializeHelp() {
   
   const svg = document.getElementsByTagName('svg');
   svg.addTextEvent("This graph shows the average win-tie-loss ratio over the past 200 games");
-  
-  // selectors.addTextEvent("mouseenter", "asdf");
-  // for (var i = 0; i < selectors.length; i++) {
-  //   selectors[i].addEventListener("mouseenter", () => {
-  //     helpText.innerHTML = "Select an AI<br />Easy: preprogrammed to make random moves<br />Medium: preprogrammed to get two in a row<br />Hard: preprogrammed to win or tie most games<br />ML: starts off making random moves, pursues higher-incentive states";
-  //   });
-  // }
-  
-  
 }
 
 

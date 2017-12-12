@@ -44,10 +44,10 @@ class AIPlayer extends Player {
   
   _findTwoInRow(board, piece) {
     // rows & col
-    for (var i = 0; i < board.size; i++) {
+    for (let i = 0; i < board.size; i++) {
       const row = [];
       const col = [];
-      for (var j = 0; j < board.size; j++) {
+      for (let j = 0; j < board.size; j++) {
         row.push(board.getPiece([i, j]));
         col.push(board.getPiece([j, i]));
       }
@@ -62,7 +62,7 @@ class AIPlayer extends Player {
     // diags
     const diag1 = [];
     const diag2 = [];
-    for (var i = 0; i < board.size; i++) {
+    for (let i = 0; i < board.size; i++) {
       diag1.push(board.getPiece([i, i]));
       diag2.push(board.getPiece([i, board.size - i - 1]));
     }
@@ -107,7 +107,7 @@ class MediumPlayer extends AIPlayer {
       
       const moves = goodMoves.map(pos => JSON.stringify(pos));
       const positions = board.openPositions().map(pos => JSON.stringify(pos));
-      for (var i = 0; i < moves.length; i++) {
+      for (let i = 0; i < moves.length; i++) {
         if (positions.includes(moves[i])) {
           move = goodMoves[i];
           break;
@@ -142,8 +142,8 @@ class HardPlayer extends AIPlayer {
     corners = shuffle(corners);
     edges = shuffle(edges);
     const grid = [];
-    for (var i = 0; i < 3; i++) {
-      for (var j = 0; j < 3; j++) {
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
         grid.push(board.getPiece([i, j]));
       }
     }
@@ -161,7 +161,7 @@ class HardPlayer extends AIPlayer {
     } else if (turn === 2) {
       // If opponent chose corner, choose center
       // otherwise, choose corner
-      for (var i = 0; i < corners.length; i++) {
+      for (let i = 0; i < corners.length; i++) {
         if (board.getPiece(corners[i]) !== " ") {
           move = [1, 1];
         }
@@ -175,13 +175,13 @@ class HardPlayer extends AIPlayer {
       // If opponent chose corner, choose any corner
       // If opponent chose edge, take center
       if (board.getPiece([1, 1]) !== " ") {
-        for (var i = 0; i < corners.length; i++) {
+        for (let i = 0; i < corners.length; i++) {
           if (board.getPiece(corners[i]) !== " ") {
             move = [(corners[i][0] + 2) % 4, (corners[i][1] + 2) % 4];
           }
         }
       } else {
-        for (var i = 0; i < corners.length; i++) {
+        for (let i = 0; i < corners.length; i++) {
           if (board.getPiece(corners[i]) === " ") {
             freeCorners.push(corners[i]);
           }
@@ -199,7 +199,7 @@ class HardPlayer extends AIPlayer {
       // If the opponent chose an edge, choose the other edge
       // opposite of the opponent's corner piece
       let takenCorner;
-      for (var i = 0; i < corners.length; i++) {
+      for (let i = 0; i < corners.length; i++) {
         if (board.getPiece(corners[i]) === " ") {
           freeCorners.push(corners[i]);
         } else {
@@ -240,7 +240,7 @@ function shuffle(array) {
 
 Array.prototype.count = function(obj) {
   let counter = 0;
-  for (var i = 0; i < this.length; i++) {
+  for (let i = 0; i < this.length; i++) {
     if (this[i] === obj) counter++;
   }
   return counter;

@@ -10,9 +10,9 @@ class Board {
   
   resetGrid(size) {
     const grid = [];
-    for (var i = 0; i < this.size; i++) {
+    for (let i = 0; i < this.size; i++) {
       const row = [];
-      for (var j = 0; j < this.size; j++) {
+      for (let j = 0; j < this.size; j++) {
         row.push(" ");
         this.squares[i * 3 + j].innerHTML = "";
       }
@@ -24,8 +24,8 @@ class Board {
   drawInitialBoard() {
     const board = document.getElementById('board');
     const length = board.style.width - 2;
-    for (var i = 0; i < this.size; i++) {
-      for (var j = 0; j < this.size; j++) {
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
         const square = document.createElement('div');
         square.className = `square s${i}${j}`;
         square.style.width = `${Math.floor(length / this.size)}px`;
@@ -38,10 +38,10 @@ class Board {
   
   winner() {
     // rows & col
-    for (var i = 0; i < this.size; i++) {
+    for (let i = 0; i < this.size; i++) {
       const row = new Set();
       const col = new Set();
-      for (var j = 0; j < this.size; j++) {
+      for (let j = 0; j < this.size; j++) {
         row.add(this.grid[i][j]);
         col.add(this.grid[j][i]);
       }
@@ -56,7 +56,7 @@ class Board {
     // diags
     const diag1 = new Set();
     const diag2 = new Set();
-    for (var i = 0; i < this.size; i++) {
+    for (let i = 0; i < this.size; i++) {
       diag1.add(this.grid[i][i]);
       diag2.add(this.grid[i][this.size - i - 1]);
     }
@@ -70,8 +70,8 @@ class Board {
   }
   
   isFull() {
-    for (var i = 0; i < this.size; i++) {
-      for (var j = 0; j < this.size; j++) {
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
         if (this.grid[i][j] === " ") return false;
       }
     }
@@ -101,8 +101,8 @@ class Board {
   openPositions() {
     // returns array of available positions
     const positions = [];
-    for (var i = 0; i < this.size; i++) {
-      for (var j = 0; j < this.size; j++) {
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
         if (this.grid[i][j] === " ") {
           positions.push([i, j]);
         }
@@ -116,7 +116,7 @@ module.exports = Board;
 
 },{}],2:[function(require,module,exports){
 const ORDERED_ARR = [];
-for (var i = 0; i < 100; i++) {
+for (let i = 0; i < 100; i++) {
   ORDERED_ARR.push(i * 2);
 }
 
@@ -423,14 +423,10 @@ module.exports = Game;
 function initializeHelp() {
   const helpText = document.querySelector('.help-text');
   
-  // function clearHelp() {
-  //   helpText.innerHTML = "";
-  // }
-  
   let fadeTimeout = null;
   
   function addText(text) {
-    for (var i = 0; i < this.length; i++) {
+    for (let i = 0; i < this.length; i++) {
       this[i].addEventListener("mouseenter", () => {
         helpText.innerHTML = text;
         helpText.classList.remove("fadeout");
@@ -468,15 +464,6 @@ function initializeHelp() {
   
   const svg = document.getElementsByTagName('svg');
   svg.addTextEvent("This graph shows the average win-tie-loss ratio over the past 200 games");
-  
-  // selectors.addTextEvent("mouseenter", "asdf");
-  // for (var i = 0; i < selectors.length; i++) {
-  //   selectors[i].addEventListener("mouseenter", () => {
-  //     helpText.innerHTML = "Select an AI<br />Easy: preprogrammed to make random moves<br />Medium: preprogrammed to get two in a row<br />Hard: preprogrammed to win or tie most games<br />ML: starts off making random moves, pursues higher-incentive states";
-  //   });
-  // }
-  
-  
 }
 
 
@@ -712,7 +699,7 @@ class MLPlayer extends Player {
         move = greatestMove;
       } else {
         const rand = Math.floor(Math.random() * totalWeight);
-        for (var i = 0; i < weightArr.length; i++) {
+        for (let i = 0; i < weightArr.length; i++) {
           if (rand < weightArr[i]) {
             move = positions[i];
             break;
@@ -828,10 +815,10 @@ class AIPlayer extends Player {
   
   _findTwoInRow(board, piece) {
     // rows & col
-    for (var i = 0; i < board.size; i++) {
+    for (let i = 0; i < board.size; i++) {
       const row = [];
       const col = [];
-      for (var j = 0; j < board.size; j++) {
+      for (let j = 0; j < board.size; j++) {
         row.push(board.getPiece([i, j]));
         col.push(board.getPiece([j, i]));
       }
@@ -846,7 +833,7 @@ class AIPlayer extends Player {
     // diags
     const diag1 = [];
     const diag2 = [];
-    for (var i = 0; i < board.size; i++) {
+    for (let i = 0; i < board.size; i++) {
       diag1.push(board.getPiece([i, i]));
       diag2.push(board.getPiece([i, board.size - i - 1]));
     }
@@ -891,7 +878,7 @@ class MediumPlayer extends AIPlayer {
       
       const moves = goodMoves.map(pos => JSON.stringify(pos));
       const positions = board.openPositions().map(pos => JSON.stringify(pos));
-      for (var i = 0; i < moves.length; i++) {
+      for (let i = 0; i < moves.length; i++) {
         if (positions.includes(moves[i])) {
           move = goodMoves[i];
           break;
@@ -926,8 +913,8 @@ class HardPlayer extends AIPlayer {
     corners = shuffle(corners);
     edges = shuffle(edges);
     const grid = [];
-    for (var i = 0; i < 3; i++) {
-      for (var j = 0; j < 3; j++) {
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
         grid.push(board.getPiece([i, j]));
       }
     }
@@ -945,7 +932,7 @@ class HardPlayer extends AIPlayer {
     } else if (turn === 2) {
       // If opponent chose corner, choose center
       // otherwise, choose corner
-      for (var i = 0; i < corners.length; i++) {
+      for (let i = 0; i < corners.length; i++) {
         if (board.getPiece(corners[i]) !== " ") {
           move = [1, 1];
         }
@@ -959,13 +946,13 @@ class HardPlayer extends AIPlayer {
       // If opponent chose corner, choose any corner
       // If opponent chose edge, take center
       if (board.getPiece([1, 1]) !== " ") {
-        for (var i = 0; i < corners.length; i++) {
+        for (let i = 0; i < corners.length; i++) {
           if (board.getPiece(corners[i]) !== " ") {
             move = [(corners[i][0] + 2) % 4, (corners[i][1] + 2) % 4];
           }
         }
       } else {
-        for (var i = 0; i < corners.length; i++) {
+        for (let i = 0; i < corners.length; i++) {
           if (board.getPiece(corners[i]) === " ") {
             freeCorners.push(corners[i]);
           }
@@ -983,7 +970,7 @@ class HardPlayer extends AIPlayer {
       // If the opponent chose an edge, choose the other edge
       // opposite of the opponent's corner piece
       let takenCorner;
-      for (var i = 0; i < corners.length; i++) {
+      for (let i = 0; i < corners.length; i++) {
         if (board.getPiece(corners[i]) === " ") {
           freeCorners.push(corners[i]);
         } else {
@@ -1024,7 +1011,7 @@ function shuffle(array) {
 
 Array.prototype.count = function(obj) {
   let counter = 0;
-  for (var i = 0; i < this.length; i++) {
+  for (let i = 0; i < this.length; i++) {
     if (this[i] === obj) counter++;
   }
   return counter;

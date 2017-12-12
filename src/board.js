@@ -9,9 +9,9 @@ class Board {
   
   resetGrid(size) {
     const grid = [];
-    for (var i = 0; i < this.size; i++) {
+    for (let i = 0; i < this.size; i++) {
       const row = [];
-      for (var j = 0; j < this.size; j++) {
+      for (let j = 0; j < this.size; j++) {
         row.push(" ");
         this.squares[i * 3 + j].innerHTML = "";
       }
@@ -23,8 +23,8 @@ class Board {
   drawInitialBoard() {
     const board = document.getElementById('board');
     const length = board.style.width - 2;
-    for (var i = 0; i < this.size; i++) {
-      for (var j = 0; j < this.size; j++) {
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
         const square = document.createElement('div');
         square.className = `square s${i}${j}`;
         square.style.width = `${Math.floor(length / this.size)}px`;
@@ -37,10 +37,10 @@ class Board {
   
   winner() {
     // rows & col
-    for (var i = 0; i < this.size; i++) {
+    for (let i = 0; i < this.size; i++) {
       const row = new Set();
       const col = new Set();
-      for (var j = 0; j < this.size; j++) {
+      for (let j = 0; j < this.size; j++) {
         row.add(this.grid[i][j]);
         col.add(this.grid[j][i]);
       }
@@ -55,7 +55,7 @@ class Board {
     // diags
     const diag1 = new Set();
     const diag2 = new Set();
-    for (var i = 0; i < this.size; i++) {
+    for (let i = 0; i < this.size; i++) {
       diag1.add(this.grid[i][i]);
       diag2.add(this.grid[i][this.size - i - 1]);
     }
@@ -69,8 +69,8 @@ class Board {
   }
   
   isFull() {
-    for (var i = 0; i < this.size; i++) {
-      for (var j = 0; j < this.size; j++) {
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
         if (this.grid[i][j] === " ") return false;
       }
     }
@@ -100,8 +100,8 @@ class Board {
   openPositions() {
     // returns array of available positions
     const positions = [];
-    for (var i = 0; i < this.size; i++) {
-      for (var j = 0; j < this.size; j++) {
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
         if (this.grid[i][j] === " ") {
           positions.push([i, j]);
         }

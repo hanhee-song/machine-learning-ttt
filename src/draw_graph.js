@@ -1,5 +1,5 @@
 const ORDERED_ARR = [];
-for (var i = 0; i < 100; i++) {
+for (let i = 0; i < 100; i++) {
   ORDERED_ARR.push(i * 2);
 }
 

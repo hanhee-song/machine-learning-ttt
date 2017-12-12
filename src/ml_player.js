@@ -53,7 +53,7 @@ class MLPlayer extends Player {
         move = greatestMove;
       } else {
         const rand = Math.floor(Math.random() * totalWeight);
-        for (var i = 0; i < weightArr.length; i++) {
+        for (let i = 0; i < weightArr.length; i++) {
           if (rand < weightArr[i]) {
             move = positions[i];
             break;
