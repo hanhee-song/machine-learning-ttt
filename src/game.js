@@ -183,12 +183,8 @@ class Game {
   }
   
   _switchPlayers() {
-    // Maybe a more elegant way to do this
-    if (this.currentPlayer === this.player1) {
-      this.currentPlayer = this.player2;
-    } else {
-      this.currentPlayer = this.player1;
-    }
+    this.currentPlayer = this.currentPlayer === this.player1 ?
+      this.player2 : this.player1;
   }
 }
 
