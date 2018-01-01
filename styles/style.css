@@ -129,14 +129,14 @@ body {
   line-height: 1.375rem;
   text-align: center;
   opacity: 1;
-  transition: all .08s;
-  -webkit-transition: all .08s;
+  transition: opacity .08s;
+  -webkit-transition: opacity .08s;
 }
 
 .fadeout {
   opacity: 0;
-  transition: all .7s;
-  -webkit-transition: all .7s;
+  transition: opacity .7s;
+  -webkit-transition: opacity .7s;
 }
 
 /**** CONTROLS ****/
@@ -201,8 +201,8 @@ select {
   border: 0.0625rem solid #7987af;
   color: #a1abc6;
   cursor: pointer;
-  transition: all .1s;
-  -webkit-transition: all .1s;
+  transition: opacity .1s;
+  -webkit-transition: opacity .1s;
 }
 
 .select {
@@ -243,8 +243,8 @@ select:disabled {
 .slider {
   -webkit-appearance: none;
   background: transparent;
-  transition: all .1s;
-  -webkit-transition: all .1s;
+  transition: opacity .1s;
+  -webkit-transition: opacity .1s;
 }
 
 .slider:disabled {
